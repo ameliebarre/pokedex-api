@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var  Pokemon = require('../models/Pokemon');
+var Pokemon = require('../models/Pokemon');
 
 // Get all pokemons with their types
 router.get('/', function(req, res) {
@@ -19,6 +19,23 @@ router.get('/:slug', function(req, res) {
             res.status(200).json(pokemon);
         }
     });
+});
+
+router.post('/', function(req, res) {
+    var pokemon = new Pokemon(req.body);
+
+    pokemon.save(function(err, pokemon) {
+        if (err) {
+            res.status(500).send(err);
+        }
+
+        res.status(200).send(pokemon);
+    })
+});
+
+// Update a pokemon
+router.put('/:slug', function(req, res) {
+   var query = Pokemon.find({ slug: req.params.slug });
 });
 
 module.exports = router;

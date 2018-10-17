@@ -12,7 +12,7 @@ var pokemonSchema = new mongoose.Schema({
         required: true
     },
     number: {
-        type: Number,
+        type: String,
         required: true
     },
     description: {
@@ -24,11 +24,11 @@ var pokemonSchema = new mongoose.Schema({
         required: true
     },
     height: {
-        type: Number,
+        type: String,
         required: true
     },
     weight: {
-        type: Number,
+        type: String,
         required: true
     },
     picture: {
