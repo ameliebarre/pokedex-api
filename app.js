@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 // Connection to database
-mongoose.connect('mongodb://localhost/pokedex');
+mongoose.connect('mongodb://localhost/pokedex', { useNewUrlParser: true });
 
 // Import models
 require('./src/models/Pokemon');

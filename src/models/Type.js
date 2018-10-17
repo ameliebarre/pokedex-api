@@ -9,8 +9,8 @@ var typeSchema = new mongoose.Schema({
 });
 
 typeSchema.virtual('pokemons', {
-   ref: 'Pokemon',
-   localFiled: '_id',
+    ref: 'Pokemon',
+    localField: '_id',
     foreignField: 'types'
 });
 
