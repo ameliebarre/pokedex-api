@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
 
 var typeSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     color: {
         type: String,
+        required: true,
         default: 'red'
     }
 });
