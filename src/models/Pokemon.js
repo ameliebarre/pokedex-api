@@ -63,8 +63,15 @@ var pokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    evolution: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
     types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
-    weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
+    weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }]
+});
+
+pokemonSchema.virtual('pokemons', {
+    ref: 'Pokemon',
+    localField: '_id',
+    foreignField: 'evolution'
 });
 
 var Pokemon = mongoose.model('Pokemon', pokemonSchema);

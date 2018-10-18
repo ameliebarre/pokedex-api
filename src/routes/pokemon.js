@@ -3,7 +3,11 @@ var Pokemon = require('../models/Pokemon');
 
 // Get all pokemons with their types
 router.get('/', function(req, res) {
-    var populateQuery = [{ path:'types', select:'name color' }, { path:'weaknesses', select:'name color' }];
+    var populateQuery = [
+        { path:'types', select:'name color' },
+        { path:'weaknesses', select:'name color' },
+        { path:'evolution', select:'name picture number' }
+    ];
     var query = Pokemon.find({}).populate(populateQuery);
 
     query.exec(function(err, pokemons) {
