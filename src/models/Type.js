@@ -22,5 +22,11 @@ typeSchema.virtual('pokemons', {
     foreignField: 'types'
 });
 
+typeSchema.virtual('pokemons', {
+    ref: 'Pokemon',
+    localField: '_id',
+    foreignField: 'weaknesses'
+});
+
 var Type = mongoose.model('Type', typeSchema);
 module.exports = Type;

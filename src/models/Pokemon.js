@@ -63,7 +63,8 @@ var pokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    types: [{ type: Schema.Types.ObjectId, ref: 'Type' }]
+    types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
+    weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
 });
 
 var Pokemon = mongoose.model('Pokemon', pokemonSchema);
