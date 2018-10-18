@@ -11,7 +11,11 @@ var pokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    number: {
+    national_number: {
+        type: String,
+        required: true
+    },
+    johto_number: {
         type: String,
         required: true
     },
@@ -29,6 +33,30 @@ var pokemonSchema = new mongoose.Schema({
     },
     weight: {
         type: String,
+        required: true
+    },
+    hp: {
+        type: Number,
+        required: true
+    },
+    attack: {
+        type: Number,
+        required: true
+    },
+    defense: {
+        type: Number,
+        required: true
+    },
+    sp_attack: {
+        type: Number,
+        required: true
+    },
+    sp_defense: {
+        type: Number,
+        required: true
+    },
+    speed: {
+        type: Number,
         required: true
     },
     picture: {
