@@ -64,6 +64,10 @@ var pokemonSchema = new mongoose.Schema({
         required: true
     },
     evolution: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
+    evolution_way: {
+        type: String,
+        default: null
+    },
     types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }]
 });
