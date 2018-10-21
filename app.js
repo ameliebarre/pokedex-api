@@ -22,6 +22,7 @@ app.get('/', function(req, res) {
 // Routes
 app.use('/pokemons', require('./src/routes/pokemon-router'));
 app.use('/types', require('./src/routes/type-router'));
+app.use('/auth', require('./src/routes/auth-router'));
 
 console.log('App running on port 4500');
 app.listen(4500);
