@@ -23,7 +23,7 @@ exports.findPokemonBySlug = function(req, res) {
 
     Pokemon.find({ slug: req.params.slug }).populate(populateQuery).then(function(pokemon) {
 
-        if (pokemon.length === 0) {
+        if (!pokemon) {
             throw new Error('Pokemon does not exist');
         }
 

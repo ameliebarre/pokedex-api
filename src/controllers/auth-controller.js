@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
+var config = require('../../config');
 
 var User = require('../models/User');
 
@@ -31,5 +32,25 @@ exports.register = function(req, res) {
         }).catch(function(err) {
             res.status(500).send({ message: err.message });
         });
+    });
+};
+
+exports.login = function(req, res) {
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    User.findOne({ email: req.body.email }).then(function(user) {
+        if (email === user.email && user.comparePassword(password)) {
+            var token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
+                expiresIn: 86400 // expires in 24 hours
+            });
+
+            res.status(200).json({ user: user, token: token });
+        } else {
+            throw new Error('Bad credentials');
+        }
+    }).catch(function(err) {
+        res.status(500).send({ message: err.message });
     });
 };
