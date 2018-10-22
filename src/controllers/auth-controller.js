@@ -13,7 +13,7 @@ var User = require('../models/User');
 exports.register = function(req, res) {
     const user = new User(req.body);
 
-    bcrypt.hash(req.body.password, 12, function(err, hash) {
+    bcrypt.hash(req.body.password, 12).then(function(err, hash) {
 
         if (err) {
             throw new Error('Unable to hash the password');
@@ -26,7 +26,6 @@ exports.register = function(req, res) {
                 throw new Error('There was a problem registering the user.');
             }
 
-            user.password = hashedPassword;
             res.status(200).send(user);
 
         }).catch(function(err) {
@@ -37,12 +36,12 @@ exports.register = function(req, res) {
 
 exports.login = function(req, res) {
 
-    var email = req.body.email;
-    var password = req.body.password;
+    const email = req.body.email;
+    const password = req.body.password;
 
     User.findOne({ email: req.body.email }).then(function(user) {
         if (email === user.email && user.comparePassword(password)) {
-            var token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
+            const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
