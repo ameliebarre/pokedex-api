@@ -18,6 +18,11 @@ var userSchema = new mongoose.Schema({
       type: String,
       required: true
    },
+    permissions: {
+        type: Array,
+        required: true,
+        default: ['USER']
+    },
     created_at: {
       type: Date,
       default: Date.now

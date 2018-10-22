@@ -1,6 +1,7 @@
 const Pokemon = require('../models/Pokemon');
 
 exports.findAllPokemon = function(req, res) {
+
     var populateQuery = [
         { path:'types', select:'name color' },
         { path:'weaknesses', select:'name color' },
@@ -23,7 +24,7 @@ exports.findPokemonBySlug = function(req, res) {
 
     Pokemon.find({ slug: req.params.slug }).populate(populateQuery).then(function(pokemon) {
 
-        if (!pokemon) {
+        if (pokemon.length === 0) {
             throw new Error('Pokemon does not exist');
         }
 

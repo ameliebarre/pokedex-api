@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var auth = require('./src/middlewares/auth-middleware');
 var app = express();
 
 // Connection to database
@@ -13,6 +14,8 @@ require('./src/models/Type');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({type:'application/json'}));
 
+app.all('/api/*', [bodyParser(), auth]);
+
 // Default route
 app.get('/', function(req, res) {
     console.log('Test', req.body);
@@ -20,8 +23,8 @@ app.get('/', function(req, res) {
 });
 
 // Routes
-app.use('/pokemons', require('./src/routes/pokemon-router'));
-app.use('/types', require('./src/routes/type-router'));
+app.use('/api/pokemons', require('./src/routes/pokemon-router'));
+app.use('/api/types', require('./src/routes/type-router'));
 app.use('/auth', require('./src/routes/auth-router'));
 
 console.log('App running on port 4500');

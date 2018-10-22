@@ -11,26 +11,20 @@ var User = require('../models/User');
  * @param res
  */
 exports.register = function(req, res) {
-    const user = new User(req.body);
 
-    bcrypt.hash(req.body.password, 12).then(function(err, hash) {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 12);
 
-        if (err) {
-            throw new Error('Unable to hash the password');
-        }
+    const user = new User({
+        name : req.body.name,
+        email : req.body.email,
+        password : hashedPassword,
+        permissions: req.body.permissions
+    });
 
-        user.password = hash;
-
-        user.save().then(function(user, err) {
-            if (err) {
-                throw new Error('There was a problem registering the user.');
-            }
-
-            res.status(200).send(user);
-
-        }).catch(function(err) {
-            res.status(500).send({ message: err.message });
-        });
+    user.save().then(function(user) {
+        res.status(200).send(user);
+    }).catch(function(err) {
+        res.status(500).send({ message: err.message });
     });
 };
 
@@ -40,6 +34,11 @@ exports.login = function(req, res) {
     const password = req.body.password;
 
     User.findOne({ email: req.body.email }).then(function(user) {
+
+        if (!user) {
+            throw new Error('User doesn\'t exist');
+        }
+
         if (email === user.email && user.comparePassword(password)) {
             const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
                 expiresIn: 86400 // expires in 24 hours
@@ -50,6 +49,6 @@ exports.login = function(req, res) {
             throw new Error('Bad credentials');
         }
     }).catch(function(err) {
-        res.status(500).send({ message: err.message });
+        res.status(500).send({ status: 'error', message: err.message });
     });
 };
