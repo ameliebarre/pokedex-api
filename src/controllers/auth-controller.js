@@ -44,7 +44,11 @@ exports.login = function(req, res) {
                 expiresIn: 86400 // expires in 24 hours
             });
 
-            res.status(200).json({ user: user, token: token });
+            res.status(200).json({
+                success: true,
+                token: token
+            });
+
         } else {
             throw new Error('Bad credentials');
         }
