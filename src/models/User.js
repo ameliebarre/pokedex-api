@@ -23,15 +23,18 @@ var userSchema = new mongoose.Schema({
         required: true,
         default: ['USER']
     },
+    trainer: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
     created_at: {
       type: Date,
       default: Date.now
     }
 });
 
-userSchema.methods.comparePassword = function(password) {
-   return bcrypt.compareSync(password, this.password);
-};
+userSchema.virtual('users', {
+    ref: 'User',
+    localField: '_id',
+    foreignField: 'trainer'
+});
 
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;
