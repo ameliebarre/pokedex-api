@@ -1,8 +1,8 @@
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var config = require('../../config');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const config = require('../../config');
 
-var User = require('../models/User');
+const User = require('../models/User');
 
 /**
  * Register a new user

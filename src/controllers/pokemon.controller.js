@@ -2,7 +2,7 @@ const Pokemon = require('../models/Pokemon');
 
 exports.findAllPokemon = function(req, res) {
 
-    var populateQuery = [
+    const populateQuery = [
         { path:'types', select:'name color' },
         { path:'weaknesses', select:'name color' },
         { path:'evolution', select:'name picture number' }
@@ -16,7 +16,7 @@ exports.findAllPokemon = function(req, res) {
 };
 
 exports.findPokemonBySlug = function(req, res) {
-    var populateQuery = [
+    const populateQuery = [
         { path:'types', select:'name color' },
         { path:'weaknesses', select:'name color' },
         { path:'evolution', select:'name picture number' }

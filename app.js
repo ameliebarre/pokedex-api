@@ -1,8 +1,8 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var auth = require('./src/middlewares/auth-middleware');
-var app = express();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const auth = require('./src/middlewares/auth-middleware');
+const app = express();
 
 // Connection to database
 mongoose.connect('mongodb://localhost/pokedex', { useNewUrlParser: true });
