@@ -1,6 +1,14 @@
 const Pokemon = require('../models/Pokemon');
 
-exports.findAllPokemon = function(req, res) {
+/**
+ * Find all Pokemons
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
+exports.findAllPokemon = async(req, res, next) => {
 
     const populateQuery = [
         { path:'types', select:'name color' },
@@ -8,39 +16,63 @@ exports.findAllPokemon = function(req, res) {
         { path:'evolution', select:'name picture number' }
     ];
 
-    Pokemon.find({}).populate(populateQuery).then(function(pokemons) {
-        res.status(200).json(pokemons);
-    }).catch(function(err) {
-        res.status(500).send({ message: err.message });
-    });
+    try {
+        await Pokemon.find({}).populate(populateQuery).then(function(pokemons) {
+            res.status(200).json(pokemons);
+        })
+    } catch(err) {
+        next(err);
+    }
 };
 
-exports.findPokemonBySlug = function(req, res) {
+/**
+ * Find a Pokemon by slug
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
+exports.findPokemonBySlug = async(req, res, next) => {
     const populateQuery = [
         { path:'types', select:'name color' },
         { path:'weaknesses', select:'name color' },
         { path:'evolution', select:'name picture number' }
     ];
 
-    Pokemon.find({ slug: req.params.slug }).populate(populateQuery).then(function(pokemon) {
+    try {
+        await Pokemon.find({ slug: req.params.slug }).populate(populateQuery).then(function(pokemon) {
 
-        if (pokemon.length === 0) {
-            throw new Error('Pokemon does not exist');
-        }
+            if (pokemon.length === 0) {
+                throw new Error('Pokemon does not exist');
+            }
 
-        res.status(200).json(pokemon);
+            res.status(200).json(pokemon);
 
-    }).catch(function(err) {
-        res.status(500).send({ message: err.message });
-    });
+        })
+    } catch(err) {
+        next(err);
+    }
 };
 
-exports.createPokemon = function(req, res) {
+/**
+ * Create a Pokemon
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
+exports.createPokemon = async(req, res, next) => {
     const pokemon = new Pokemon(req.body);
 
-    pokemon.save().then(function(pokemon) {
-        res.status(200).send(pokemon);
-    }).catch(function(err) {
-        res.status(500).send({ message: err.message });
-    });
+
+    try {
+        await pokemon.save().then(function(pokemon) {
+            res.status(200).send(pokemon);
+        });
+    } catch(err) {
+        next(err);
+    }
+
 };
