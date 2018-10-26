@@ -43,8 +43,8 @@ userSchema.virtual('users', {
     foreignField: 'pokemons'
 });
 
-userSchema.methods.comparePassword = (password) => {
+function comparePassword(password) {
     return bcrypt.compareSync(password, this.password);
-};
+}
 
 export default model('User', userSchema);

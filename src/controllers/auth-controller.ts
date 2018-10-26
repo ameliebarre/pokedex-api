@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
 
-const User = require('../models/User');
+import User from '../models/User';
 
 /**
  * Register a new user
