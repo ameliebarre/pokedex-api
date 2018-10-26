@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
-const pokemonSchema = new mongoose.Schema({
+const pokemonSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -77,5 +76,4 @@ pokemonSchema.virtual('pokemons', {
     foreignField: 'evolution'
 });
 
-const Pokemon = mongoose.model('Pokemon', pokemonSchema);
-module.exports = Pokemon;
+export default model('Pokemon', pokemonSchema);

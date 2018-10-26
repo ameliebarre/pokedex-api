@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
+import * as bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         trim: true,
@@ -44,9 +43,8 @@ userSchema.virtual('users', {
     foreignField: 'pokemons'
 });
 
-userSchema.methods.comparePassword = function(password) {
+userSchema.methods.comparePassword = (password) => {
     return bcrypt.compareSync(password, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+export default model('User', userSchema);

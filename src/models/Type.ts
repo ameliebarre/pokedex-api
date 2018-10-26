@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-var typeSchema = new mongoose.Schema({
+var typeSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -28,5 +28,4 @@ typeSchema.virtual('pokemons', {
     foreignField: 'weaknesses'
 });
 
-var Type = mongoose.model('Type', typeSchema);
-module.exports = Type;
+export default model('Type', typeSchema);
