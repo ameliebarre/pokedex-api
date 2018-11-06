@@ -1,10 +1,15 @@
-var router = require('express').Router();
-var user = require('../controllers/auth-controller');
+const router = require('express').Router();
+import userController from '../controllers/auth-controller';
 
-// Create a user
-router.post('/register', user.register);
+class UserRouter {
 
-// Login a user
-router.post('/login', user.login);
+    constructor() {
+        this.initRoutes();
+    }
 
-module.exports = router;
+    initRoutes() {
+        router.post('/register', userController.register);
+    }
+}
+
+export default new UserRouter();

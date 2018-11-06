@@ -10,7 +10,7 @@ import PokemonRouter from './routes/pokemon-router';
 class Server {
 
     public app: express.Application;
-    public mongoUrl: string = 'mongodb://localhost:27017/museo';
+    public mongoUrl: string = 'mongodb://localhost:27017/pokedex';
 
     constructor() {
         this.app = express();
@@ -57,7 +57,7 @@ class Server {
     }
 
     private mongoSetup(): void {
-        mongoose.Promise = global.Promise;
+        (<any>mongoose).Promise = global.Promise;
         mongoose.connect(this.mongoUrl, { useMongoClient: true });
 
         const db = mongoose.connection;

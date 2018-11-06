@@ -1,16 +1,34 @@
+import { Request, Response } from "express";
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
 
 import User from '../models/User';
 
-/**
- * Register a new user
- *
- * @param req
- * @param res
- */
-exports.register = function(req, res) {
+class UserController {
+
+    register = async(req: Request, res: Response) => {
+        const hashedPassword = bcrypt.hashSync(req.body.password, 12);
+
+        const user = new User({
+            name : req.body.name,
+            email : req.body.email,
+            password : hashedPassword,
+            permissions: req.body.permissions
+        });
+
+        try {
+            await user.save();
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(500).send({ message: error.message });
+        }
+    }
+}
+
+export default new UserController();
+
+/*exports.register = function(req, res) {
 
     const hashedPassword = bcrypt.hashSync(req.body.password, 12);
 
@@ -26,8 +44,9 @@ exports.register = function(req, res) {
     }).catch(function(err) {
         res.status(500).send({ message: err.message });
     });
-};
+};*/
 
+/*
 exports.login = function(req, res) {
 
     const email = req.body.email;
@@ -55,4 +74,4 @@ exports.login = function(req, res) {
     }).catch(function(err) {
         res.status(500).send({ status: 'error', message: err.message });
     });
-};
+};*/
