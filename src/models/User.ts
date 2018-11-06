@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
+import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
+import { IUser } from "../interfaces/user";
 
-const userSchema = new Schema({
+const schema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
@@ -23,28 +24,38 @@ const userSchema = new Schema({
         required: true,
         default: ['USER']
     },
-    trainer: [{ type: Schema.Types.ObjectId, ref: 'Trainer' }],
-    pokemons: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
+    trainer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trainer' }],
+    pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
     created_at: {
         type: Date,
         default: Date.now
     }
 });
 
-userSchema.virtual('users', {
+schema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'trainer'
 });
 
-userSchema.virtual('users', {
+schema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'pokemons'
 });
 
-/*function comparePassword(password) {
-    return bcrypt.compareSync(password, this.password);
-}*/
+schema.methods.comparePassword = function (candidatePassword: string): Promise<boolean> {
+    let password = this.password;
 
-export default model('User', userSchema);
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(candidatePassword, password, (err, success) => {
+            if (err) {
+                return reject(err);
+            }
+
+            return resolve(success);
+        });
+    });
+};
+
+export const model = mongoose.model<IUser>("User", schema);

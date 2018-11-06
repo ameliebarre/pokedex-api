@@ -6,6 +6,7 @@ import * as logger from 'morgan';
 import * as helmet from 'helmet';
 
 import PokemonRouter from './routes/pokemon-router';
+import UserRouter from './routes/auth-router';
 
 class Server {
 
@@ -21,6 +22,8 @@ class Server {
     }
 
     public config() {
+        //this.app.all('/api/*', [bodyParser(), auth]);
+
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json({limit:'5mb', type:'application/json'}));
         this.app.use(helmet());
@@ -54,11 +57,12 @@ class Server {
 
         this.app.use('/', router);
         this.app.use('/api/pokemons', PokemonRouter);
+        this.app.use('/api/auth', UserRouter);
     }
 
     private mongoSetup(): void {
         (<any>mongoose).Promise = global.Promise;
-        mongoose.connect(this.mongoUrl, { useMongoClient: true });
+        mongoose.connect(this.mongoUrl);
 
         const db = mongoose.connection;
 
