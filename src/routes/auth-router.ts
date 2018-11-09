@@ -1,9 +1,10 @@
 import { Router } from "express";
-import userController from '../controllers/auth-controller';
+import { AuthController } from '../controllers/auth-controller';
 
 class UserRouter {
 
     router: Router;
+    authController = new AuthController();
 
     constructor() {
         this.router = Router();
@@ -11,8 +12,9 @@ class UserRouter {
     }
 
     routes() {
-        this.router.post('/register', userController.register);
-        this.router.post('/login', userController.login);
+
+        this.router.post('/register', this.authController.register);
+        this.router.post('/login', this.authController.login);
     }
 }
 

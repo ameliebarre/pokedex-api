@@ -7,11 +7,14 @@ import * as helmet from 'helmet';
 
 import PokemonRouter from './routes/pokemon-router';
 import UserRouter from './routes/auth-router';
+import { AuthMiddleware } from "./middlewares/auth-middleware";
 
 class Server {
 
     public app: express.Application;
     public mongoUrl: string = 'mongodb://localhost:27017/pokedex';
+
+    public auth = new AuthMiddleware();
 
     constructor() {
         this.app = express();
@@ -22,7 +25,7 @@ class Server {
     }
 
     public config() {
-        //this.app.all('/api/*', [bodyParser(), auth]);
+        this.app.all('/api/*', [bodyParser(), this.auth.checkToken]);
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json({limit:'5mb', type:'application/json'}));
@@ -57,7 +60,7 @@ class Server {
 
         this.app.use('/', router);
         this.app.use('/api/pokemons', PokemonRouter);
-        this.app.use('/api/auth', UserRouter);
+        this.app.use('/auth', UserRouter);
     }
 
     private mongoSetup(): void {
