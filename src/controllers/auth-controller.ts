@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const config = require('../../config');
+import * as jwt from "jsonwebtoken";
+import * as bcrypt from "bcryptjs";
 
-import { model as User } from "../models/User";
+import { User } from "../models/User";
 
 export class AuthController {
 
@@ -27,7 +26,35 @@ export class AuthController {
 
     public login = async(req: Request, res: Response) => {
         try {
-            const email = req.body.email;
+            let email = req.body.email;
+            let password = req.body.password;
+
+            const reg = /\S+@\S+\.\S+/;
+
+            if (!reg.test(email)) {
+                throw new Error("Email is not valid");
+            }
+
+            User.findByEmail(email, (err, user) => {
+               if (user) {
+                   User.comparePassword(password, user.password, (err, isMatch) => {
+                      if (err) {
+                        throw new Error("The password doesn't match");
+                      }
+
+                      const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+                          expiresIn: 604800 // 1 week
+                      });
+
+                       res.status(200).json({
+                           success: true,
+                           token: token
+                       });
+                   });
+               }
+            });
+
+            /*const email = req.body.email;
             const password = req.body.password;
 
             let user = await User.findOne({ "email": email }).exec();
@@ -48,10 +75,10 @@ export class AuthController {
 
             } else {
                 throw new Error('Invalid credentials');
-            }
+            }*/
 
         } catch (err) {
-            res.status(401).json({ "message": err.message, "errors": err });
+            res.status(401).json({ "message": err.message, "success": false });
         }
     }
 }

@@ -1,8 +1,19 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { IUser } from "../interfaces/user";
+import {Document} from "mongoose";
 
-const schema = new mongoose.Schema({
+export interface IUser extends Document {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export interface IUserModel {
+    comparePassword(candidatePassword: string, hash: string, callback: Function): void,
+    findByEmail(email: string, callback: Function): void
+}
+
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
@@ -32,19 +43,32 @@ const schema = new mongoose.Schema({
     }
 });
 
-schema.virtual('users', {
+userSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'trainer'
 });
 
-schema.virtual('users', {
+userSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'pokemons'
 });
 
-schema.methods.comparePassword = function (candidatePassword: string): Promise<boolean> {
+userSchema.static('comparePassword', (candidatePassword: string, hash: string, callback: Function) => {
+    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+        if(err) {
+            throw err;
+        }
+        callback(null, isMatch);
+    });
+});
+
+userSchema.static('findByEmail', (email: string, callback: Function) => {
+    User.findOne({email: email}, callback);
+});
+
+/*userSchema.methods.comparePassword = function (candidatePassword: string): Promise<boolean> {
     let password = this.password;
 
     return new Promise((resolve, reject) => {
@@ -56,6 +80,8 @@ schema.methods.comparePassword = function (candidatePassword: string): Promise<b
             return resolve(success);
         });
     });
-};
+};*/
 
-export const model = mongoose.model<IUser>("User", schema);
+export type UserModel = mongoose.Model<IUser> & IUserModel & IUser;
+
+export const User: UserModel = <UserModel>mongoose.model<IUser>("User", userSchema);

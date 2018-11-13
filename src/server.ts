@@ -9,6 +9,9 @@ import PokemonRouter from './routes/pokemon-router';
 import UserRouter from './routes/auth-router';
 import { AuthMiddleware } from "./middlewares/auth-middleware";
 
+//Require dotenv
+require('dotenv').config();
+
 class Server {
 
     public app: express.Application;
