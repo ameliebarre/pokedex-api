@@ -11,7 +11,7 @@ class PokemonController {
      * @param next
      * @returns {Promise<void>}
      */
-    public findAllPokemon = async(req, res, next) => {
+    findAllPokemon = async(req, res, next) => {
 
         const populateQuery = [
             { path:'types', select:'name color' },
@@ -35,7 +35,7 @@ class PokemonController {
      * @param next
      * @returns {Promise<void>}
      */
-    public findPokemonBySlug = async(req, res) => {
+    findPokemonBySlug = async(req, res, next) => {
         const populateQuery = [
             { path:'types', select:'name color' },
             { path:'weaknesses', select:'name color' },
@@ -63,7 +63,7 @@ class PokemonController {
      * @param res
      * @returns {Promise<void>}
      */
-    public createPokemon = async(req: Request, res: Response) => {
+    createPokemon = async(req: Request, res: Response) => {
         const pokemon = new Pokemon(req.body);
 
         try {

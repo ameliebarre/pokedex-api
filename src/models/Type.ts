@@ -1,7 +1,6 @@
-import * as mongoose from 'mongoose';
-import { IType } from "../interfaces/type";
+import { Schema, model } from 'mongoose';
 
-const schema = new mongoose.Schema({
+var typeSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -17,16 +16,16 @@ const schema = new mongoose.Schema({
     }
 });
 
-schema.virtual('pokemons', {
+typeSchema.virtual('pokemons', {
     ref: 'Pokemon',
     localField: '_id',
     foreignField: 'types'
 });
 
-schema.virtual('pokemons', {
+typeSchema.virtual('pokemons', {
     ref: 'Pokemon',
     localField: '_id',
     foreignField: 'weaknesses'
 });
 
-export const model = mongoose.model<IType>("Type", schema);
+export default model('Type', typeSchema);
