@@ -25,7 +25,7 @@ class Server {
     }
 
     public config() {
-        this.app.all('/api/*', [bodyParser(), this.auth.checkToken]);
+        this.app.all('/api/*', this.auth.checkToken);
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json({limit:'5mb', type:'application/json'}));

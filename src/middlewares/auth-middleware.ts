@@ -1,28 +1,35 @@
-import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 
-let config = dotenv.config();
+import * as dotenv from 'dotenv';
+const config = require('../../config');
 
 export class AuthMiddleware {
 
     public checkToken = (req, res, next) => {
-        const token = req.body.token || req.query.token || req.headers['access-token'];
+        let token = req.headers['x-access-token'] || req.headers['authorization'];
+
+        if (token.startsWith('Bearer ')) {
+            // Remove Bearer from string
+            token = token.slice(7, token.length);
+        }
 
         if (token) {
-            jwt.verify(token, config.JWT_SECRET, function(err, decode) {
+            jwt.verify(token, config.JWT_SECRET, (err, decoded) => {
                 if (err) {
-                    return res.status(401).json({ error: true, message: 'Unauthorized access' });
+                    return res.json({
+                        success: false,
+                        message: 'Token is not valid'
+                    });
+                } else {
+                    req.decoded = decoded;
+                    next();
                 }
-
-                req.decoded = decode;
-                next();
-            })
+            });
         } else {
-            return res.status(401).send({
-                "error": true,
-                "message": 'Unauthorized access'
+            return res.json({
+                success: false,
+                message: 'Auth token is not supplied'
             });
         }
-    }
-
+    };
 }
