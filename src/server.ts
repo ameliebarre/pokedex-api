@@ -7,6 +7,7 @@ import * as helmet from 'helmet';
 
 import PokemonRouter from './routes/pokemon-router';
 import UserRouter from './routes/auth-router';
+
 import { AuthMiddleware } from "./middlewares/auth-middleware";
 
 //Require dotenv
@@ -24,6 +25,7 @@ class Server {
 
         this.mongoSetup();
         this.config();
+        this.models();
         this.routes();
     }
 
@@ -49,6 +51,12 @@ class Server {
             // Pass to next layer of middleware
             next();
         });
+    }
+
+    public models() {
+        require('./models/Pokemon');
+        require('./models/Type');
+        require('./models/User');
     }
 
     public routes(): void {

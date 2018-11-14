@@ -1,4 +1,7 @@
+'use strict';
+
 import { Schema, model } from 'mongoose';
+import { IPokemon } from "../interfaces/IPokemon";
 
 const pokemonSchema = new Schema({
     name: {
@@ -76,4 +79,10 @@ pokemonSchema.virtual('pokemons', {
     foreignField: 'evolution'
 });
 
-export default model('Pokemon', pokemonSchema);
+pokemonSchema.virtual('pokemonTypes', {
+    ref: 'Type',
+    localField: '_id',
+    foreignField: 'type'
+});
+
+export const Pokemon = model<IPokemon>('Pokemon', pokemonSchema);
