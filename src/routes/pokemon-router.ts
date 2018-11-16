@@ -15,6 +15,7 @@ class PokemonRouter {
         this.router.get('/', pokemonController.findAllPokemon);
         this.router.get('/:slug', pokemonController.findPokemonBySlug);
         this.router.post('/', pokemonController.createPokemon);
+        this.router.put('/:slug', pokemonController.updatePokemon);
     }
 }
 

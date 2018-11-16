@@ -1,7 +1,5 @@
-import * as express from 'express';
-
-import { Pokemon } from "../models/Pokemon";
-import { Type } from '../models/Type';
+import { Pokemon as Pokemon } from "../models/Pokemon";
+import {IPokemon} from "../interfaces/IPokemon";
 
 class PokemonController {
 
@@ -37,7 +35,7 @@ class PokemonController {
      * @param next
      * @returns {Promise<void>}
      */
-    findPokemonBySlug = async(req, res, next) => {
+    public findPokemonBySlug = async(req, res) => {
         const populateQuery = [
             { path:'types', select:'name color' },
             { path:'weaknesses', select:'name color' },
@@ -66,12 +64,28 @@ class PokemonController {
      * @returns {Promise<void>}
      */
     public createPokemon = async(req, res) => {
-        const pokemon = new Pokemon(req.body);
-
         try {
+            const pokemon = new Pokemon(req.body);
             await pokemon.save();
+
             res.status(200).send(pokemon);
         } catch(error) {
+            res.status(500).send({ message: error.message });
+        }
+    };
+
+    /**
+     * Update a Pokemon
+     * 
+     * @param req
+     * @param res
+     * @returns {Promise<void>}
+     */
+    public updatePokemon = async(req, res) => {
+        try {
+            const pokemon = await Pokemon.findOneAndUpdate({ slug: req.params.slug }, req.body);
+            await res.send(pokemon);
+        } catch (error) {
             res.status(500).send({ message: error.message });
         }
     };
