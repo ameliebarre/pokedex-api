@@ -76,7 +76,7 @@ class PokemonController {
 
     /**
      * Update a Pokemon
-     * 
+     *
      * @param req
      * @param res
      * @returns {Promise<void>}
@@ -85,10 +85,31 @@ class PokemonController {
         try {
             const pokemon = await Pokemon.findOneAndUpdate({ slug: req.params.slug }, req.body);
             await res.send(pokemon);
+
+            res.status(200).send(pokemon);
         } catch (error) {
             res.status(500).send({ message: error.message });
         }
     };
+
+    /**
+     * Delete a Pokemon
+     *
+     * @param req
+     * @param res
+     * @returns {Promise<void>}
+     */
+    public deletePokemon = async(req, res) => {
+        try {
+            await Pokemon.findOneAndDelete({ slug: req.params.slug });
+            await res.status(200).json({
+                status: 'success',
+                message: 'Le Pokemon a été été supprimé avec succès'
+            })
+        } catch (error) {
+            res.status(500).send({ message: error.message });
+        }
+    }
 }
 
 export default new PokemonController();
