@@ -1,5 +1,4 @@
 import { Pokemon as Pokemon } from "../models/Pokemon";
-import {IPokemon} from "../interfaces/IPokemon";
 
 class PokemonController {
 
@@ -22,8 +21,8 @@ class PokemonController {
 
             const pokemons = await Pokemon.find({}).populate(populateQuery);
             res.status(200).json(pokemons);
-        } catch(err) {
-            res.status(500).json({ "message": err.message, "success": false });
+        } catch(error) {
+            res.status(500).send({ message: error.message, success: "false" });
         }
     };
 
@@ -32,7 +31,6 @@ class PokemonController {
      *
      * @param req
      * @param res
-     * @param next
      * @returns {Promise<void>}
      */
     public findPokemonBySlug = async(req, res) => {
@@ -52,7 +50,7 @@ class PokemonController {
             res.status(200).json(pokemon);
 
         } catch(error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send({ message: error.message, success: "false" });
         }
     };
 
@@ -70,7 +68,7 @@ class PokemonController {
 
             res.status(200).send(pokemon);
         } catch(error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send({ message: error.message, success: "false" });
         }
     };
 
@@ -84,11 +82,16 @@ class PokemonController {
     public updatePokemon = async(req, res) => {
         try {
             const pokemon = await Pokemon.findOneAndUpdate({ slug: req.params.slug }, req.body);
+
+            if (!pokemon) {
+                return res.status(404).json({ message: "Ce Pokemon n'existe pas. Erreur lors de la modification." });
+            }
+
             await res.send(pokemon);
 
             res.status(200).send(pokemon);
         } catch (error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send({ message: error.message, success: "false" });
         }
     };
 
@@ -101,13 +104,18 @@ class PokemonController {
      */
     public deletePokemon = async(req, res) => {
         try {
-            await Pokemon.findOneAndDelete({ slug: req.params.slug });
-            await res.status(200).json({
+            const pokemon = await Pokemon.findOneAndDelete({ slug: req.params.slug });
+
+            if (!pokemon) {
+                return res.status(404).json({ message: "Ce Pokemon n'existe pas. Erreur lors de la suppression." });
+            }
+
+            res.status(200).json({
                 status: 'success',
                 message: 'Le Pokemon a été été supprimé avec succès'
-            })
+            });
         } catch (error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send({ message: error.message, success: "false" });
         }
     }
 }
