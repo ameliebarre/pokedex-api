@@ -17,5 +17,19 @@ export class TypeController {
         } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
+    };
+
+    public findTypeBySlug = async(req, res) => {
+      try {
+          const type = await Type.find({ slug: req.params.slug });
+
+          if (type.length === 0) {
+              throw new Error('Type does not exist');
+          }
+
+          res.status(200).send(type);
+      } catch (error) {
+          res.status(500).send({ message: error.message, success: "false" });
+      }
     }
 }
