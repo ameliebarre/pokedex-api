@@ -13,6 +13,7 @@ export class TypeController {
     public findAllTypes = async(req, res) => {
         try {
             const types = await Type.find({});
+            res.status(200).send(types);
         } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }

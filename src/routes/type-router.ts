@@ -13,7 +13,7 @@ class TypeRouter {
     }
 
     routes() {
-        this.router.get('/types', this.typeController.findAllTypes);
+        this.router.get('/', this.typeController.findAllTypes);
     }
 }
 
