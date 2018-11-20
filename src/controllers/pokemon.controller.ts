@@ -7,7 +7,7 @@ class PokemonController {
      *
      * @param req
      * @param res
-     * @param next
+     *
      * @returns {Promise<void>}
      */
     public findAllPokemon = async(req, res) => {
@@ -31,6 +31,7 @@ class PokemonController {
      *
      * @param req
      * @param res
+     *
      * @returns {Promise<void>}
      */
     public findPokemonBySlug = async(req, res) => {
@@ -59,6 +60,7 @@ class PokemonController {
      *
      * @param req
      * @param res
+     *
      * @returns {Promise<void>}
      */
     public createPokemon = async(req, res) => {
@@ -77,6 +79,7 @@ class PokemonController {
      *
      * @param req
      * @param res
+     *
      * @returns {Promise<void>}
      */
     public updatePokemon = async(req, res) => {
@@ -100,6 +103,7 @@ class PokemonController {
      *
      * @param req
      * @param res
+     *
      * @returns {Promise<void>}
      */
     public deletePokemon = async(req, res) => {

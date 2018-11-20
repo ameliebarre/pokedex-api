@@ -7,6 +7,7 @@ import * as helmet from 'helmet';
 
 import PokemonRouter from './routes/pokemon-router';
 import UserRouter from './routes/auth-router';
+import TypeRouter from "./routes/type-router";
 
 import { AuthMiddleware } from "./middlewares/auth-middleware";
 
@@ -72,6 +73,7 @@ class Server {
         this.app.use('/', router);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/auth', UserRouter);
+        this.app.use('/types', TypeRouter);
     }
 
     private mongoSetup(): void {
