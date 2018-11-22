@@ -6,7 +6,7 @@ import { User } from "../models/User";
 
 export class AuthController {
 
-    public register = async(req, res) => {
+    public register = async(req: Request, res: Response) => {
         try {
             let name = req.body.name;
             let email = req.body.email;

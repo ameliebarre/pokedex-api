@@ -83,4 +83,30 @@ export class TypeController {
         }
     };
 
+    /**
+     * Delete a type
+     *
+     * @param req
+     * @param res
+     *
+     * @returns {Promise<void>}
+     */
+    public deleteType = async(req, res) => {
+      try {
+          const type = Type.findOneAndDelete({ slug: req.params.slug });
+
+          if (!type) {
+              return res.status(404).json({ message: "Ce type n'existe pas. Erreur lors de la suppression." });
+          }
+
+          res.status(200).json({
+              status: 'success',
+              message: 'Le type a été été supprimé avec succès'
+          });
+
+      } catch (error) {
+          res.status(500).send({ message: error.message, success: "false" });
+      }
+    };
+
 }

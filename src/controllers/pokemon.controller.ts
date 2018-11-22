@@ -1,6 +1,6 @@
 import { Pokemon as Pokemon } from "../models/Pokemon";
 
-class PokemonController {
+export class PokemonController {
 
     /**
      * Find all Pokemons
@@ -123,5 +123,3 @@ class PokemonController {
         }
     }
 }
-
-export default new PokemonController();

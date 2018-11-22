@@ -1,21 +1,23 @@
 import { Router } from "express";
-import pokemonController from '../controllers/pokemon.controller';
+import { PokemonController } from '../controllers/pokemon.controller';
 
 class PokemonRouter {
 
     router: Router;
+    pokemonController: PokemonController;
 
     constructor() {
         this.router = Router();
+        this.pokemonController = new PokemonController();
         this.routes();
     }
 
     routes() {
-        this.router.get('/', pokemonController.findAllPokemon);
-        this.router.get('/:slug', pokemonController.findPokemonBySlug);
-        this.router.post('/', pokemonController.createPokemon);
-        this.router.put('/:slug', pokemonController.updatePokemon);
-        this.router.delete('/:slug', pokemonController.deletePokemon);
+        this.router.get('/', this.pokemonController.findAllPokemon);
+        this.router.get('/:slug', this.pokemonController.findPokemonBySlug);
+        this.router.post('/', this.pokemonController.createPokemon);
+        this.router.put('/:slug', this.pokemonController.updatePokemon);
+        this.router.delete('/:slug', this.pokemonController.deletePokemon);
     }
 }
 

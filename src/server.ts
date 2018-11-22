@@ -5,9 +5,10 @@ import * as compression from 'compression';
 import * as logger from 'morgan';
 import * as helmet from 'helmet';
 
-import PokemonRouter from './routes/pokemon-router';
-import UserRouter from './routes/auth-router';
+import PokemonRouter from "./routes/pokemon-router";
+import AuthRouter from "./routes/auth-router";
 import TypeRouter from "./routes/type-router";
+import UserRouter from "./routes/user-router";
 
 import { AuthMiddleware } from "./middlewares/auth-middleware";
 
@@ -71,9 +72,10 @@ class Server {
         });
 
         this.app.use('/', router);
-        this.app.use('/auth', UserRouter);
+        this.app.use('/auth', AuthRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
+        this.app.use('/api/user', UserRouter);
     }
 
     private mongoSetup(): void {
