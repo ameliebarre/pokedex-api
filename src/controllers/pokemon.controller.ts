@@ -87,10 +87,10 @@ class PokemonController {
             const pokemon = await Pokemon.findOneAndUpdate({ slug: req.params.slug }, req.body);
 
             if (!pokemon) {
-                return res.status(404).json({ message: "Ce Pokemon n'existe pas. Erreur lors de la modification." });
+                return res.status(404).json({ message: "Ce Pokemon n'existe pas. Erreur lors de la modification.", success: false });
             }
 
-            await res.send(pokemon);
+            await res.status(201).send(pokemon);
 
             res.status(200).send(pokemon);
         } catch (error) {

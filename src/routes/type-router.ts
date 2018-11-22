@@ -16,6 +16,7 @@ class TypeRouter {
         this.router.get('/', this.typeController.findAllTypes);
         this.router.get('/:slug', this.typeController.findTypeBySlug);
         this.router.post('/', this.typeController.createType);
+        this.router.put('/:slug', this.typeController.updateType);
     }
 }
 

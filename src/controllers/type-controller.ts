@@ -55,7 +55,30 @@ export class TypeController {
             await type.save();
 
             res.status(200).send(type);
-        }   catch (error) {
+        } catch (error) {
+            res.status(500).send({ message: error.message, success: "false" });
+        }
+    };
+
+    /**
+     * Update a type
+     *
+     * @param req
+     * @param res
+     *
+     * @returns {Promise<void>}
+     */
+    public updateType = async(req, res) => {
+        try {
+            const type = await Type.findOneAndUpdate({ slug: req.params.slug }, req.body);
+
+            if (!type) {
+                return res.status(404).json({ message: "Ce type n'existe pas. Erreur lors de la modification.", success: false });
+            }
+
+            await res.status(201).send(req.body);
+
+        } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
     };
