@@ -79,6 +79,9 @@ export class AuthController {
                 res.status(200).json({
                     success: true,
                     token: token,
+                    name: user.name,
+                    email: user.email,
+                    password: user.password
                 });
             }
 
