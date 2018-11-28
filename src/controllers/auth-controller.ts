@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
+import * as moment from 'moment';
 
 import { User } from "../models/User";
 import {IUser} from "../interfaces/IUser";
@@ -73,13 +74,15 @@ export class AuthController {
                     message: 'Wrong credentials'
                 });
             } else {
+                let expires =  moment().days(7).valueOf();
                 const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-                    expiresIn: 604800 // 1 week
+                    expiresIn: expires // 1 week
                 });
 
                 res.status(200).json({
                     success: true,
                     token: token,
+                    expiresAt: expires,
                     user: user
                 });
             }
