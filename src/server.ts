@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as logger from 'morgan';
 import * as helmet from 'helmet';
+import * as cors from 'cors';
 
 import PokemonRouter from "./routes/pokemon-router";
 import AuthRouter from "./routes/auth-router";
@@ -24,6 +25,9 @@ class Server {
 
     constructor() {
         this.app = express();
+
+        // Enable CORS
+        this.app.use(cors());
 
         this.mongoSetup();
         this.config();

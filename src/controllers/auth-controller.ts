@@ -39,7 +39,7 @@ export class AuthController {
             } else {
                 res.status(400).json({
                     success: false,
-                    message: 'This email address has already been taken.'
+                    message: 'Cette adresse mail existe déjà.'
                 });
             }
 
