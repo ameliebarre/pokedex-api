@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 
 import { User } from "../models/User";
+import {IUser} from "../interfaces/IUser";
 
 export class AuthController {
 
@@ -79,9 +80,7 @@ export class AuthController {
                 res.status(200).json({
                     success: true,
                     token: token,
-                    name: user.name,
-                    email: user.email,
-                    password: user.password
+                    user: user
                 });
             }
 
