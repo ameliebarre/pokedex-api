@@ -4,7 +4,9 @@ import * as bcrypt from "bcryptjs";
 import * as moment from 'moment';
 
 import { User } from "../models/User";
-import {IUser} from "../interfaces/IUser";
+
+const sender = 'smtps://amliebarre@gmail.com';
+const password = process.env.MAIL_PASSWORD;
 
 export class AuthController {
 
@@ -90,6 +92,10 @@ export class AuthController {
         } catch (err) {
             res.status(401).json({ "message": err.message, "success": false });
         }
+    };
+
+    public sendEmail = async(req, res) => {
+
     };
 
     private checkEmailFormat(reg, email) {
