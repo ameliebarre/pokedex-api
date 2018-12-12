@@ -33,7 +33,7 @@ const pokemonSchema = new Schema({
         required: true
     },
     generation: {
-        type: String,
+        type: Number,
         required: true
     },
     weight: {
