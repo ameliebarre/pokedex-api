@@ -32,6 +32,10 @@ const pokemonSchema = new Schema({
         type: String,
         required: true
     },
+    generation: {
+        type: String,
+        required: true
+    },
     weight: {
         type: String,
         required: true
@@ -60,7 +64,11 @@ const pokemonSchema = new Schema({
         type: Number,
         required: true
     },
-    picture: {
+    thumb: {
+        type: String,
+        required: true
+    },
+    image: {
         type: String,
         required: true
     },
