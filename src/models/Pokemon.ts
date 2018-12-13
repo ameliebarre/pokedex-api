@@ -28,12 +28,12 @@ const pokemonSchema = new Schema({
         type: Array,
         required: true
     },
-    height: {
-        type: String,
-        required: true
-    },
     generation: {
         type: Number,
+        required: true
+    },
+    height: {
+        type: String,
         required: true
     },
     weight: {
