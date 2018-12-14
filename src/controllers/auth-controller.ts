@@ -76,7 +76,8 @@ export class AuthController {
                     message: 'Wrong credentials'
                 });
             } else {
-                let expires =  moment().days(7).valueOf();
+                let expires = moment().add(1,'days').valueOf();
+
                 const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
                     expiresIn: expires // 1 week
                 });
