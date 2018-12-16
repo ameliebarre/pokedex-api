@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isNew: {
+      type: Boolean,
+      default: true
+    },
     permissions: {
         type: Array,
         required: true,

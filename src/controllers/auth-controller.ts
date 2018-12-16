@@ -69,6 +69,7 @@ export class AuthController {
             }
 
             let userPassword = await bcrypt.compare(password, user.password);
+            let firstTime: boolean;
 
             if (!userPassword) {
                 res.status(400).json({
@@ -78,6 +79,12 @@ export class AuthController {
             } else {
                 let expires = moment().add(1,'days').valueOf();
 
+                if (user.isNew) {
+                    firstTime = true;
+                } else {
+                    firstTime = false;
+                }
+
                 const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
                     expiresIn: expires // 1 week
                 });
@@ -86,6 +93,7 @@ export class AuthController {
                     success: true,
                     token: token,
                     expiresAt: expires,
+                    isNew: firstTime,
                     user: user
                 });
             }
