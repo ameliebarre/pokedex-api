@@ -79,7 +79,7 @@ export class AuthController {
             } else {
                 let expires = moment().add(1,'days').valueOf();
 
-                if (user.isNew) {
+                if (user.isFirstTime) {
                     firstTime = true;
                 } else {
                     firstTime = false;

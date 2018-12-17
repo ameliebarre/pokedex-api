@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isNew: {
+    isFirstTime: {
       type: Boolean,
       default: true
     },
