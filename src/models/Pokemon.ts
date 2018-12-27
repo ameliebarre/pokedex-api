@@ -64,14 +64,6 @@ const pokemonSchema = new Schema({
         type: Number,
         required: true
     },
-    thumb: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    },
     evolution: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
     evolution_way: {
         type: String,

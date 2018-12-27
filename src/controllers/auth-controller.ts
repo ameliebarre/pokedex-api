@@ -93,7 +93,7 @@ export class AuthController {
                     success: true,
                     token: token,
                     expiresAt: expires,
-                    isNew: firstTime,
+                    isFirstTime: firstTime,
                     user: user
                 });
             }

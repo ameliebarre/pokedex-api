@@ -16,7 +16,6 @@ export interface IPokemon extends mongoose.Document {
     sp_attack: number,
     sp_defense: number,
     speed: number,
-    picture: string,
     evolution: IPokemon,
     evolution_way: string,
     types: IType,
