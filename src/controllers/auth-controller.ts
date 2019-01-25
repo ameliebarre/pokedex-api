@@ -89,11 +89,11 @@ export class AuthController {
                     expiresIn: expires // 1 week
                 });
 
+                user['isFirstTime'] = firstTime;
+
                 res.status(200).json({
-                    success: true,
                     token: token,
                     expiresAt: expires,
-                    isFirstTime: firstTime,
                     user: user
                 });
             }
