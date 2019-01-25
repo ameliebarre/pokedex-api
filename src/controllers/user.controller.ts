@@ -1,16 +1,15 @@
-import { Request, Response } from "express";
 import { User } from "../models/User";
 
 export class UserController {
 
-    public profileRead = async(req, res) => {
+    public getUserProfile = async(req, res) => {
         try {
 
-            if (!req.payload._id) {
+            if (!req.params.id) {
                 res.status(401).json({ message: "Unauthorized error : private profile" })
             }
 
-            const user = await User.findById(req.payload._id);
+            const user = await User.findById(req.params.id);
 
             res.status(200).json(user);
 

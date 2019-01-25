@@ -103,10 +103,6 @@ export class AuthController {
         }
     };
 
-    public sendEmail = async(req, res) => {
-
-    };
-
     private checkEmailFormat(reg, email) {
         if (!reg.test(email)) {
             throw new Error("Email is not valid");

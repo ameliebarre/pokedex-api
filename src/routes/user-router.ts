@@ -12,7 +12,7 @@ class UserRouter {
     }
 
     routes() {
-        this.router.get('/profile', this.userController.profileRead);
+        this.router.get('/:id', this.userController.getUserProfile);
     }
 }
 

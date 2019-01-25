@@ -79,7 +79,7 @@ class Server {
         this.app.use('/auth', AuthRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
-        this.app.use('/api/user', UserRouter);
+        this.app.use('/api/profile', UserRouter);
     }
 
     private mongoSetup(): void {
