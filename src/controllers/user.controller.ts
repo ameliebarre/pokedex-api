@@ -14,7 +14,21 @@ export class UserController {
             res.status(200).json(user);
 
         } catch(error) {
-            res.status(500).send({ message: error.message, success: "false" });
+            res.status(500).send({ message: error.message, success: false });
+        }
+    };
+
+    public updateProdile = async(req, res, next) => {
+        try {
+            User.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, user) {
+                if (err) {
+                    return next(err);
+                }
+
+                res.send('User updated.');
+            });
+        } catch(error) {
+            res.status(500).send({ message: error.error.message, success: false })
         }
     }
 
