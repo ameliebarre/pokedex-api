@@ -12,7 +12,7 @@ export class AuthController {
 
     public register = async(req: Request, res: Response) => {
         try {
-            let name = req.body.name;
+            let username = req.body.username;
             let email = req.body.email;
             let password = req.body.password;
 
@@ -26,7 +26,7 @@ export class AuthController {
                 const hashedPassword = bcrypt.hashSync(password, 12);
 
                 const user = new User({
-                    name : name,
+                    username : username,
                     email : email,
                     password : hashedPassword,
                     permissions: req.body.permissions

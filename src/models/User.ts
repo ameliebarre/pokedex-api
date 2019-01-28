@@ -2,11 +2,14 @@ import * as mongoose from 'mongoose';
 import { IUser } from "../interfaces/IUser";
 
 const userSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         trim: true,
         required: true
     },
+    name: String,
+    firstname: String,
+    birthDate: String,
     email: {
         type: String,
         unique: true,
@@ -14,6 +17,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    city: String,
     password: {
         type: String,
         required: true
