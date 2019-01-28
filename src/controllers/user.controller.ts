@@ -18,15 +18,10 @@ export class UserController {
         }
     };
 
-    public updateProdile = async(req, res, next) => {
+    public updateProfile = async(req, res, next) => {
         try {
-            User.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, user) {
-                if (err) {
-                    return next(err);
-                }
-
-                res.send('User updated.');
-            });
+            const user = await User.findByIdAndUpdate(req.params.id, {$set: req.body});
+            res.status(201).json(user);
         } catch(error) {
             res.status(500).send({ message: error.error.message, success: false })
         }

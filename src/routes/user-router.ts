@@ -13,7 +13,7 @@ class UserRouter {
 
     routes() {
         this.router.get('/:id', this.userController.getUserProfile);
-        this.router.put('/:id', this.userController.updateProdile);
+        this.router.put('/:id', this.userController.updateProfile);
     }
 }
 
