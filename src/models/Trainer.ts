@@ -5,15 +5,8 @@ export const trainerSchema = new Schema({
         type: String,
         required: true
     },
-    gender: {
+    slug: {
         type:String,
-        required: true
-    },
-    age: {
-        type: Number
-    },
-    picture: {
-        type: String,
         required: true
     }
 });
