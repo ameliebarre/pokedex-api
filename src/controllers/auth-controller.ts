@@ -29,7 +29,7 @@ export class AuthController {
                     username : username,
                     email : email,
                     password : hashedPassword,
-                    permissions: req.body.permissions
+                    permissions: ['USER']
                 });
 
                 await user.save();

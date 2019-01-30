@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    sex: String,
     city: String,
+    zipcode: String,
+    country: String,
+    phone: Number,
     password: {
         type: String,
         required: true
