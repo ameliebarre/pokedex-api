@@ -1,4 +1,4 @@
-import Trainer from "../models/Trainer";
+import { Trainer as Trainer } from "../models/Trainer";
 
 export class TrainerController {
 

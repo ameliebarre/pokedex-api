@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { ITrainer } from "../interfaces/ITrainer";
 
 export const trainerSchema = new Schema({
     name: {
@@ -11,4 +12,4 @@ export const trainerSchema = new Schema({
     }
 });
 
-export default model('Trainer', trainerSchema);
+export const Trainer = model<ITrainer>('Trainer', trainerSchema);
