@@ -5,6 +5,7 @@ import * as compression from 'compression';
 import * as logger from 'morgan';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
+import * as referrerPolicy from 'referrer-policy';
 
 import PokemonRouter from "./routes/pokemon-router";
 import AuthRouter from "./routes/auth-router";
@@ -41,6 +42,7 @@ class Server {
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json({limit:'5mb', type:'application/json'}));
+        this.app.use(referrerPolicy({ policy: 'same-origin' }));
         this.app.use(helmet());
         this.app.use(logger('dev'));
         this.app.use(compression());

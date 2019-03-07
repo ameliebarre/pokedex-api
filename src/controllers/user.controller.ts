@@ -1,4 +1,5 @@
 import { User } from "../models/User";
+import * as mongoose from "mongoose";
 
 export class UserController {
 
@@ -14,16 +15,33 @@ export class UserController {
             res.status(200).json(user);
 
         } catch(error) {
-            res.status(500).send({ message: error.message, success: false });
+            res.status(500).send({ message: error, success: false });
         }
     };
 
     public updateProfile = async(req, res, next) => {
         try {
-            const user = await User.findByIdAndUpdate(req.params.id, { $set: req.body });
+            let id = mongoose.Types.ObjectId(req.params.id);
+
+            const user = await User.findByIdAndUpdate(id, {$set: req.body});
+
             res.status(201).json(user);
         } catch(error) {
-            res.status(500).send({ message: error.error.message, success: false })
+            res.status(500).send({ message: error, success: false })
+        }
+    }
+
+    public updateTrainer = async(req, res, next) => {
+        try {
+            let id = mongoose.Types.ObjectId(req.params.id);
+
+            const user = await User.findByIdAndUpdate(id, {$set: req.body});
+
+            console.log(req.body);
+
+            res.status(201).json(user);
+        } catch(error) {
+            res.status(500).send({ message: error, success: false })
         }
     }
 
