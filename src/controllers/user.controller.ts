@@ -34,13 +34,14 @@ export class UserController {
     public updateTrainer = async(req, res, next) => {
         try {
             let id = mongoose.Types.ObjectId(req.params.id);
+            let trainerId = mongoose.Types.ObjectId(req.body.trainer._id);
 
-            const user = await User.findByIdAndUpdate(id, {$set: req.body});
-
-            console.log(req.body);
+            // const user = await User.findByIdAndUpdate(id, {$set: req.body});
+            const user = await User.findOneAndUpdate({ _id: id }, { $set: { 'trainer': trainerId } });
 
             res.status(201).json(user);
         } catch(error) {
+            console.log(req.body);
             res.status(500).send({ message: error, success: false })
         }
     }
