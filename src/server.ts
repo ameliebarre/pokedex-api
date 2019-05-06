@@ -88,7 +88,7 @@ class Server {
 
     private mongoSetup(): void {
         (<any>mongoose).Promise = global.Promise;
-        mongoose.connect(this.mongoUrl);
+        mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
 
         const db = mongoose.connection;
 
