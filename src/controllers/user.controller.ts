@@ -33,7 +33,7 @@ export class UserController
      *
      * @param {e.Request} req
      * @param {Response} res
-     * 
+     *
      * @returns {Promise<void>}
      */
     public updateProfile = async(req: Request, res: Response) => {
