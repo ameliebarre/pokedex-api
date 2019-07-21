@@ -5,9 +5,6 @@ import * as moment from 'moment';
 
 import { User } from "../models/User";
 
-const sender = 'smtps://amliebarre@gmail.com';
-const password = process.env.MAIL_PASSWORD;
-
 export class AuthController {
 
     public register = async(req: Request, res: Response) => {

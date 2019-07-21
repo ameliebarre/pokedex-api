@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec --compilers ts:ts-node/register 'test/**/*.test.ts'",
+    "test": "mocha --exit -r ts-node/register test/*.spec.ts",
     "build": "gulp scripts",
     "start": "node dist/index.js"
   },
@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
+    "chai-http": "^4.3.0",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
@@ -29,7 +30,6 @@
     "jwt-simple": "^0.5.5",
     "moment": "^2.22.2",
     "mongoose": "^5.3.8",
-    "mocha": "^6.0.2",
     "morgan": "^1.9.1",
     "nodemailer": "^4.7.0",
     "passport": "^0.4.0",
@@ -39,13 +39,13 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/chai": "^4.1.7",
     "@types/jwt-simple": "^0.5.33",
     "@types/mongoose": "^5.2.22",
     "@types/node": "^10.12.1",
     "@types/passport": "^0.4.6",
     "@types/passport-jwt": "^3.0.1",
     "@types/superagent": "^3.8.4",
-    "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "gulp": "^4.0.0",
     "gulp-apidoc": "^0.2.8",
@@ -53,8 +53,9 @@
     "gulp-typescript": "^5.0.0-alpha.3",
     "gulp-util": "^3.0.8",
     "istanbul": "^1.0.0-alpha.2",
-
-    "supertest": "^3.3.0",
+    "mocha": "^6.2.0",
+    "supertest": "^3.4.2",
+    "ts-node": "^8.3.0",
     "tslint": "^5.11.0",
     "typescript": "^3.1.4",
     "vinyl-fs": "^3.0.3"

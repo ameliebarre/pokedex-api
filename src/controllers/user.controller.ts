@@ -4,6 +4,17 @@ import * as mongoose from "mongoose";
 
 export class UserController
 {
+
+    public getAllUsers = async (req: Request, res: Response) => {
+        try {
+            const users = await User.find({});
+            console.log('USERS : ', users);
+            res.status(200).json(users);
+        } catch(error) {
+            res.status(500).send({ message: error, success: false });
+        }
+    };
+
     /**
      * Get a user profile
      *
@@ -14,7 +25,6 @@ export class UserController
      */
     public getUserProfile = async(req: Request, res: Response) => {
         try {
-
             if (!req.params.id) {
                 res.status(401).json({ message: "Unauthorized error : private profile" })
             }
