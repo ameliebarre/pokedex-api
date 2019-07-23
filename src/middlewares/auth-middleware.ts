@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 
-export class AuthMiddleware {
+class AuthMiddleware {
 
     public checkToken = (req, res, next) => {
         let token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -30,3 +30,5 @@ export class AuthMiddleware {
         }
     };
 }
+
+export default AuthMiddleware;

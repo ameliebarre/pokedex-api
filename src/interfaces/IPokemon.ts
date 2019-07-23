@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { IType } from "./IType";
 
-export interface IPokemon extends mongoose.Document {
+export default interface IPokemon extends mongoose.Document {
     name: string,
     slug: string,
     national_number: string,

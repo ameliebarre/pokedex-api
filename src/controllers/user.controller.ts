@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
 import * as mongoose from "mongoose";
 
-export class UserController
+import User from "../models/User";
+
+class UserController
 {
 
     public getAllUsers = async (req: Request, res: Response) => {
@@ -57,5 +58,6 @@ export class UserController
             res.status(500).send({ message: error, success: false })
         }
     };
-
 }
+
+export default UserController;

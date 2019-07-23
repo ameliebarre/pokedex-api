@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PokemonController } from '../controllers/pokemon.controller';
+import PokemonController from '../controllers/pokemon.controller';
 
 class PokemonRouter {
 

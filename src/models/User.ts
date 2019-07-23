@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
-import { IUser } from "../interfaces/IUser";
+import IUser from "../interfaces/IUser";
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
@@ -44,16 +44,16 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.virtual('users', {
+UserSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'trainer'
 });
 
-userSchema.virtual('users', {
+UserSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'pokemons'
 });
 
-export const User = mongoose.model<IUser>("User", userSchema);
+export default mongoose.model<IUser>('User', UserSchema);

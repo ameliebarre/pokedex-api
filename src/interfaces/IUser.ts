@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
-import { IPokemon } from "./IPokemon";
-import { ITrainer } from "./ITrainer";
+import IPokemon from "./IPokemon";
+import ITrainer from "./ITrainer";
 
-export interface IUser extends mongoose.Document {
+export default interface IUser extends mongoose.Document {
     name: string,
     firstname: string,
     birthDate: String,

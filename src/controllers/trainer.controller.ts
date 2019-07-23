@@ -1,6 +1,6 @@
-import { Trainer as Trainer } from "../models/Trainer";
+import Trainer from "../models/Trainer";
 
-export class TrainerController {
+class TrainerController {
 
     /**
      * Find all trainers
@@ -14,3 +14,5 @@ export class TrainerController {
         }
     }
 }
+
+export default TrainerController;

@@ -12,7 +12,7 @@ import AuthRouter from "./routes/auth-router";
 import TypeRouter from "./routes/type-router";
 import UserRouter from "./routes/user-router";
 import TrainerRouter from "./routes/trainer-router";
-import { AuthMiddleware } from './middlewares/auth-middleware';
+import AuthMiddleware from './middlewares/auth-middleware';
 
 //Require dotenv
 require('dotenv').config();

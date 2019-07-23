@@ -1,9 +1,7 @@
-'use strict';
-
 import * as mongoose from 'mongoose';
-import { IGame } from "../interfaces/IGame";
+import IGame from "../interfaces/IGame";
 
-export const gameSchema = new mongoose.Schema({
+export const GameSchema = new mongoose.Schema({
     name: {
        type: String,
        required: true
@@ -19,10 +17,10 @@ export const gameSchema = new mongoose.Schema({
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 
-gameSchema.virtual('games', {
+GameSchema.virtual('games', {
     ref: 'Game',
     localField: '_id',
     foreignField: 'pokemons'
 });
 
-export const Game = mongoose.model<IGame>('Game', gameSchema);
+export default mongoose.model<IGame>('Game', GameSchema);

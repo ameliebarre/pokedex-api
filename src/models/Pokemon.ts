@@ -1,9 +1,7 @@
-'use strict';
+import * as mongoose from 'mongoose';
+import IPokemon from "../interfaces/IPokemon";
 
-import { Schema, model } from 'mongoose';
-import { IPokemon } from "../interfaces/IPokemon";
-
-const pokemonSchema = new Schema({
+const PokemonSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -64,25 +62,25 @@ const pokemonSchema = new Schema({
         type: Number,
         required: true
     },
-    evolution: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
+    evolution: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
     evolution_way: {
         type: String,
         default: null
     },
-    types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
-    weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }]
+    types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
+    weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }]
 });
 
-pokemonSchema.virtual('pokemons', {
+PokemonSchema.virtual('pokemons', {
     ref: 'Pokemon',
     localField: '_id',
     foreignField: 'evolution'
 });
 
-pokemonSchema.virtual('pokemonTypes', {
+PokemonSchema.virtual('pokemonTypes', {
     ref: 'Type',
     localField: '_id',
     foreignField: 'type'
 });
 
-export const Pokemon = model<IPokemon>('Pokemon', pokemonSchema);
+export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);

@@ -1,7 +1,7 @@
-import { Schema, model } from 'mongoose';
-import { ITrainer } from "../interfaces/ITrainer";
+import * as mongoose from 'mongoose';
+import ITrainer from "../interfaces/ITrainer";
 
-export const trainerSchema = new Schema({
+export const TrainerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -12,4 +12,4 @@ export const trainerSchema = new Schema({
     }
 });
 
-export const Trainer = model<ITrainer>('Trainer', trainerSchema);
+export default mongoose.model<ITrainer>('Trainer', TrainerSchema);

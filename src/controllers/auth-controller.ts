@@ -3,9 +3,9 @@ import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 import * as moment from 'moment';
 
-import { User } from "../models/User";
+import User from "../models/User";
 
-export class AuthController {
+class AuthController {
 
     public register = async(req: Request, res: Response) => {
         try {
@@ -106,3 +106,5 @@ export class AuthController {
         }
     }
 }
+
+export default AuthController;

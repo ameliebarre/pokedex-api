@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TrainerController } from "../controllers/trainer.controller";
+import TrainerController from "../controllers/trainer.controller";
 
 class TrainerRouter {
     router: Router;
