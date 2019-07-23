@@ -37,7 +37,7 @@ class App {
     }
 
     public config() {
-        this.app.all('/api/*', this.auth.checkToken);
+        // this.app.all('/api/*', this.auth.checkToken);
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json({limit:'5mb', type:'application/json'}));
@@ -68,8 +68,7 @@ class App {
     }
 
     public routes(): void {
-        let router: express.Router;
-        router = express.Router();
+        let router = express.Router();
 
         router.get('/', (req, res, next) => {
             res.json({
@@ -77,9 +76,11 @@ class App {
             });
         });
 
+        // routes.initialize(app);
+
         this.app.use('/', router);
         this.app.use('/auth', AuthRouter);
-        this.app.use('/api/profile', UserRouter);
+        this.app.use('/api/users', UserRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
         this.app.use('/api/trainers', TrainerRouter);

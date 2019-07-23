@@ -28,7 +28,7 @@ const PokemonSchema = new mongoose.Schema({
     },
     generation: {
         type: Number,
-        required: true
+        required: false
     },
     height: {
         type: String,

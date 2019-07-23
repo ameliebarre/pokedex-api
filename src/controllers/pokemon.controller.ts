@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 import Pokemon from "../models/Pokemon";
 
 class PokemonController {
@@ -10,7 +12,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public findAllPokemon = async(req, res) => {
+    public findAllPokemon(req: Request, res: Response) {
 
         try {
             const populateQuery = [
@@ -19,8 +21,14 @@ class PokemonController {
                 { path:'weaknesses', select:'name color' }
             ];
 
-            const pokemons = await Pokemon.find({}).populate(populateQuery);
-            res.status(200).json(pokemons);
+            Pokemon.find({}, (error, pokemons) => {
+                if (error) {
+                    throw error;
+                }
+
+                return res.status(200).json(pokemons);
+
+            }).populate(populateQuery);
         } catch(error) {
             res.status(500).send({ message: error.message, success: "false" });
         }

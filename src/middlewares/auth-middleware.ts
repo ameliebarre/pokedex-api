@@ -13,7 +13,7 @@ class AuthMiddleware {
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                 if (err) {
-                    return res.json({
+                    return res.status(401).json({
                         success: false,
                         message: 'Token is not valid'
                     });
@@ -23,7 +23,7 @@ class AuthMiddleware {
                 }
             });
         } else {
-            return res.json({
+            return res.status(401).json({
                 success: false,
                 message: 'No token provided'
             });

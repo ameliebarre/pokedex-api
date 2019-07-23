@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { IType } from "./IType";
+import IType from "./IType";
 
 export default interface IPokemon extends mongoose.Document {
     name: string,
