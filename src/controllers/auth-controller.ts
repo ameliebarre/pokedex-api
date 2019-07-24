@@ -33,12 +33,12 @@ class AuthController {
 
                 res.status(200).json({
                     success: true,
-                    message: 'User created successfully'
+                    message: 'USER_CREATED'
                 });
             } else {
                 res.status(400).json({
                     success: false,
-                    message: 'Cette adresse mail existe déjà.'
+                    message: 'EMAIL_ALREADY_EXISTS'
                 });
             }
 
@@ -61,7 +61,7 @@ class AuthController {
             if (!user) {
                 res.status(500).json({
                     success: false,
-                    message: "The user doesn\'t seem to exist"
+                    message: "USER_NOT_FOUND"
                 });
             }
 
@@ -71,7 +71,7 @@ class AuthController {
             if (!userPassword) {
                 res.status(400).json({
                     success: false,
-                    message: 'Wrong credentials'
+                    message: 'WRONG_PASSWORD'
                 });
             } else {
                 let expires = moment().add(1,'days').valueOf();
@@ -102,7 +102,7 @@ class AuthController {
 
     private checkEmailFormat(reg, email) {
         if (!reg.test(email)) {
-            throw new Error("Email is not valid");
+            throw new Error("EMAIL_NOT_VALID");
         }
     }
 }

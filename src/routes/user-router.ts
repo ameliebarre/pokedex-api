@@ -16,7 +16,8 @@ class UserRouter {
         this.router.get('/', this.userController.getAllUsers);
         this.router.get('/:id', this.userController.getUserProfile);
         this.router.put('/:id', this.userController.updateProfile);
-        this.router.put('/:id/trainer', this.userController.updateProfile);
+        this.router.put('/:id/reset-password', this.userController.resetPassword);
+        this.router.delete('/:id', this.userController.deleteProfile);
     }
 }
 
