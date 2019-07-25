@@ -1,21 +1,15 @@
-import { Schema, model } from 'mongoose';
+import * as mongoose from 'mongoose';
+import ITrainer from "../interfaces/ITrainer";
 
-export const trainerSchema = new Schema({
+export const TrainerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    gender: {
+    slug: {
         type:String,
-        required: true
-    },
-    age: {
-        type: Number
-    },
-    picture: {
-        type: String,
         required: true
     }
 });
 
-export default model('Trainer', trainerSchema);
+export default mongoose.model<ITrainer>('Trainer', TrainerSchema);

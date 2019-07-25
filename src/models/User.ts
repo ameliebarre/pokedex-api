@@ -1,12 +1,16 @@
 import * as mongoose from 'mongoose';
-import { IUser } from "../interfaces/IUser";
+import IUser from "../interfaces/IUser";
 
-const userSchema = new mongoose.Schema({
-    name: {
+const UserSchema = new mongoose.Schema({
+    username: {
         type: String,
         trim: true,
         required: true
     },
+    name: String,
+    uid: Number,
+    firstname: String,
+    birthDate: String,
     email: {
         type: String,
         unique: true,
@@ -14,6 +18,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
+    sex: String,
+    city: String,
+    zipcode: String,
+    country: String,
+    phone: Number,
     password: {
         type: String,
         required: true
@@ -35,16 +44,16 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.virtual('users', {
+UserSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'trainer'
 });
 
-userSchema.virtual('users', {
+UserSchema.virtual('users', {
     ref: 'User',
     localField: '_id',
     foreignField: 'pokemons'
 });
 
-export const User = mongoose.model<IUser>("User", userSchema);
+export default mongoose.model<IUser>('User', UserSchema);

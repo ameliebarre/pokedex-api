@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 
-export class AuthMiddleware {
+class AuthMiddleware {
 
     public checkToken = (req, res, next) => {
         let token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -13,7 +13,7 @@ export class AuthMiddleware {
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
                 if (err) {
-                    return res.json({
+                    return res.status(401).json({
                         success: false,
                         message: 'Token is not valid'
                     });
@@ -23,10 +23,12 @@ export class AuthMiddleware {
                 }
             });
         } else {
-            return res.json({
+            return res.status(401).json({
                 success: false,
                 message: 'No token provided'
             });
         }
     };
 }
+
+export default AuthMiddleware;

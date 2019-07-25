@@ -1,6 +1,8 @@
-import { Pokemon as Pokemon } from "../models/Pokemon";
+import { Request, Response } from "express";
 
-export class PokemonController {
+import Pokemon from "../models/Pokemon";
+
+class PokemonController {
 
     /**
      * Find all Pokemons
@@ -10,7 +12,7 @@ export class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public findAllPokemon = async(req, res) => {
+    public findAllPokemon(req: Request, res: Response) {
 
         try {
             const populateQuery = [
@@ -19,8 +21,14 @@ export class PokemonController {
                 { path:'weaknesses', select:'name color' }
             ];
 
-            const pokemons = await Pokemon.find({}).populate(populateQuery);
-            res.status(200).json(pokemons);
+            Pokemon.find({}, (error, pokemons) => {
+                if (error) {
+                    throw error;
+                }
+
+                return res.status(200).json(pokemons);
+
+            }).populate(populateQuery);
         } catch(error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
@@ -123,3 +131,5 @@ export class PokemonController {
         }
     }
 }
+
+export default PokemonController;

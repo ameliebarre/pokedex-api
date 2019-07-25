@@ -3,16 +3,13 @@ import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
 import * as moment from 'moment';
 
-import { User } from "../models/User";
+import User from "../models/User";
 
-const sender = 'smtps://amliebarre@gmail.com';
-const password = process.env.MAIL_PASSWORD;
-
-export class AuthController {
+class AuthController {
 
     public register = async(req: Request, res: Response) => {
         try {
-            let name = req.body.name;
+            let username = req.body.username;
             let email = req.body.email;
             let password = req.body.password;
 
@@ -26,22 +23,22 @@ export class AuthController {
                 const hashedPassword = bcrypt.hashSync(password, 12);
 
                 const user = new User({
-                    name : name,
+                    username : username,
                     email : email,
                     password : hashedPassword,
-                    permissions: req.body.permissions
+                    permissions: ['USER']
                 });
 
                 await user.save();
 
                 res.status(200).json({
                     success: true,
-                    message: 'User created successfully'
+                    message: 'USER_CREATED'
                 });
             } else {
                 res.status(400).json({
                     success: false,
-                    message: 'Cette adresse mail existe déjà.'
+                    message: 'EMAIL_ALREADY_EXISTS'
                 });
             }
 
@@ -64,7 +61,7 @@ export class AuthController {
             if (!user) {
                 res.status(500).json({
                     success: false,
-                    message: "The user doesn\'t seem to exist"
+                    message: "USER_NOT_FOUND"
                 });
             }
 
@@ -74,7 +71,7 @@ export class AuthController {
             if (!userPassword) {
                 res.status(400).json({
                     success: false,
-                    message: 'Wrong credentials'
+                    message: 'WRONG_PASSWORD'
                 });
             } else {
                 let expires = moment().add(1,'days').valueOf();
@@ -89,11 +86,11 @@ export class AuthController {
                     expiresIn: expires // 1 week
                 });
 
+                user['isFirstTime'] = firstTime;
+
                 res.status(200).json({
-                    success: true,
                     token: token,
                     expiresAt: expires,
-                    isFirstTime: firstTime,
                     user: user
                 });
             }
@@ -103,13 +100,11 @@ export class AuthController {
         }
     };
 
-    public sendEmail = async(req, res) => {
-
-    };
-
     private checkEmailFormat(reg, email) {
         if (!reg.test(email)) {
-            throw new Error("Email is not valid");
+            throw new Error("EMAIL_NOT_VALID");
         }
     }
 }
+
+export default AuthController;

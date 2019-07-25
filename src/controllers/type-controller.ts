@@ -1,6 +1,6 @@
-import { Type } from "../models/Type";
+import Type from "../models/Type";
 
-export class TypeController {
+class TypeController {
 
     /**
      * Find all types
@@ -108,5 +108,6 @@ export class TypeController {
           res.status(500).send({ message: error.message, success: "false" });
       }
     };
-
 }
+
+export default TypeController;

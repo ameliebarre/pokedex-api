@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { UserController } from "../controllers/user.controller";
+
+import UserController from "../controllers/user.controller";
 
 class UserRouter {
     router: Router;
@@ -12,7 +13,11 @@ class UserRouter {
     }
 
     routes() {
-        this.router.get('/profile', this.userController.profileRead);
+        this.router.get('/', this.userController.getAllUsers);
+        this.router.get('/:id', this.userController.getUserProfile);
+        this.router.put('/:id', this.userController.updateProfile);
+        this.router.put('/:id/reset-password', this.userController.resetPassword);
+        this.router.delete('/:id', this.userController.deleteProfile);
     }
 }
 
