@@ -36,18 +36,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: ['USER']
     },
-    trainer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trainer' }],
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
     created_at: {
         type: Date,
         default: Date.now
     }
-});
-
-UserSchema.virtual('users', {
-    ref: 'User',
-    localField: '_id',
-    foreignField: 'trainer'
 });
 
 UserSchema.virtual('users', {

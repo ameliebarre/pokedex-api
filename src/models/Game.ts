@@ -10,7 +10,7 @@ export const GameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
+    picture: {
         type: String,
         required: true
     },
