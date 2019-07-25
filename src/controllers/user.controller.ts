@@ -86,6 +86,12 @@ class UserController
             const newPassword = req.body.newPassword;
             const userId = req.params.id;
 
+            if (!newPassword || newPassword === null) {
+                return res.status(500).send({
+                    message: 'You must fill in your current password'
+                });
+            }
+
             await User.findById(userId, (err, user) => {
                 let userPassword = bcrypt.compare(verifyPassword, user.password);
 
@@ -104,7 +110,7 @@ class UserController
                 } else {
                     // The user didn't give the right current password, he can't change his new password
                     return res.status(422).send({
-                        message: 'PASSWORD_DO_NOT_MATCH',
+                        message: 'PASSWORD_DOES_NOT_MATCH',
                         success: false
                     });
                 }

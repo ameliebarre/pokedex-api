@@ -71,9 +71,9 @@ describe('User test', () => {
         const newPassword = 'myNewPassword';
 
         return supertest(app)
-            .put('/api/users/6c8fad7c9de8960b444a91e3/changePassword')
+            .put('/api/users/6c8fad7c9de8960b444a91e3/reset-password')
             .send({
-                password: newPassword
+                password: 'myNewPassword'
             })
             .then(response => {
                 console.log(response.body);
