@@ -10,14 +10,7 @@ const request = require('supertest');
 
 describe('GET /api/pokemons', () => {
 
-    let fakePerson;
     let token;
-    let cookie;
-    let agent = request.agent(app);
-
-    before(() => {
-
-    });
 
     before(async() => {
        await Pokemon.create({
@@ -80,7 +73,7 @@ describe('GET /api/pokemons', () => {
     it('get all Pokemons', () => {
 
         return supertest(app)
-            .get("/api/pokemons")
+            .get('/api/pokemons')
             .set('Authorization', 'Bearer ' + this.token)
             .expect(200)
             .then(response => {

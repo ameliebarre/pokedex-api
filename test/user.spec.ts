@@ -1,12 +1,10 @@
 import * as supertest from 'supertest';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import * as bcrypt from 'bcryptjs';
 import app from '../src/app';
 const ObjectId = require('mongodb').ObjectID;
 
 const expect = chai.expect;
-
 chai.use(chaiHttp);
 
 import User from '../src/models/User';
