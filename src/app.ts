@@ -7,10 +7,11 @@ import * as helmet from 'helmet';
 import * as cors from 'cors';
 import * as referrerPolicy from 'referrer-policy';
 
-import PokemonRouter from "./routes/pokemon-router";
-import AuthRouter from "./routes/auth-router";
-import TypeRouter from "./routes/type-router";
-import UserRouter from "./routes/user-router";
+import PokemonRouter from "./routes/pokemon.router";
+import AuthRouter from "./routes/auth.router";
+import TypeRouter from "./routes/type.router";
+import UserRouter from "./routes/user.router";
+import ConsoleRouter from './routes/console.router';
 import AuthMiddleware from './middlewares/auth-middleware';
 
 //Require dotenv
@@ -82,6 +83,7 @@ class App {
         this.app.use('/api/users', UserRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
+        this.app.use('/api/consoles', ConsoleRouter);
     }
 
     private mongoSetup(): void {

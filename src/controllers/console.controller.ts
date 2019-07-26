@@ -23,7 +23,7 @@ class ConsoleController {
                 return res.status(200).json(consoles);
 
             }).populate('games');
-            
+
         } catch(error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
