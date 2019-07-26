@@ -7,7 +7,7 @@ export default interface IPokemon extends mongoose.Document {
     national_number: string,
     johto_number: string,
     description: string,
-    sex: [],
+    sex: Array<string>,
     height: string,
     weight: string,
     hp: number,
@@ -18,6 +18,6 @@ export default interface IPokemon extends mongoose.Document {
     speed: number,
     evolution: IPokemon,
     evolution_way: string,
-    types: IType,
-    weaknesses: IType
+    types: Array<IType>,
+    weaknesses: Array<IType>
 }
