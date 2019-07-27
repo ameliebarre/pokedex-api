@@ -12,6 +12,7 @@ import AuthRouter from "./routes/auth.router";
 import TypeRouter from "./routes/type.router";
 import UserRouter from "./routes/user.router";
 import ConsoleRouter from './routes/console.router';
+import GameRouter from './routes/game.router';
 import AuthMiddleware from './middlewares/auth-middleware';
 
 //Require dotenv
@@ -65,6 +66,8 @@ class App {
         require('./models/Pokemon');
         require('./models/Type');
         require('./models/User');
+        require('./models/Game');
+        require('./models/Console');
     }
 
     public routes(): void {
@@ -84,6 +87,7 @@ class App {
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
         this.app.use('/api/consoles', ConsoleRouter);
+        this.app.use('/api/games', GameRouter);
     }
 
     private mongoSetup(): void {
