@@ -1,5 +1,5 @@
 import { Router } from "express";
-import TypeController from "../controllers/type-controller";
+import TypeController from "../controllers/type.controller";
 
 class TypeRouter {
 
