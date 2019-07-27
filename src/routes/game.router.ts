@@ -13,7 +13,9 @@ class GameRouter {
         this.routes();
     }
 
-    routes() {}
+    routes() {
+        this.router.get('/', this.gameController.getAllGames);
+    }
 }
 
 const gameRouter = new GameRouter();

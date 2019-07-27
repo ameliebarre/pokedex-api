@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 import Console from "../src/models/Console";
 
-describe.only('Console Spec', () => {
+describe('Console Spec', () => {
 
     before(async () => {
        await Console.create({

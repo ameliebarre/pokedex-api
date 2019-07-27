@@ -1,6 +1,7 @@
-import * as supertest from 'supertest';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
+import * as supertest from 'supertest';
+import * as bcrypt from 'bcryptjs';
 import app from '../src/app';
 const ObjectId = require('mongodb').ObjectID;
 
@@ -49,7 +50,7 @@ describe('User test', () => {
     it('should return an error if the profile does not exist', () => {
         return chai.request(app).get('/api/users/5c7fad7a4de8960b544a91e4')
             .then(res => {
-                expect(res.body.message.message).to.eql('No user found with the given id.');
+                expect(res.body.message.message).to.eql('USER_NOT_FOUND');
             });
     });
 
@@ -65,17 +66,15 @@ describe('User test', () => {
            });
     });
 
-    it.only('should update the user password', () => {
-        const newPassword = 'myNewPassword';
-
+    it('should update the user password', () => {
         return supertest(app)
             .put('/api/users/6c8fad7c9de8960b444a91e3/reset-password')
             .send({
-                password: 'myNewPassword'
+                newPassword: 'root2',
+                verifyPassword: 'root'
             })
             .then(response => {
-                console.log(response.body);
-                // expect(bcrypt.compareSync(newPassword, response.body.password)).to.be.true;
+                expect(bcrypt.compareSync('root2', response.body.password)).to.be.true;
             })
     });
 

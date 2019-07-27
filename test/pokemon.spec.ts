@@ -1,14 +1,14 @@
 import * as chai from "chai";
 import * as supertest from 'supertest';
 import app from '../src/app';
+
 import Pokemon from "../src/models/Pokemon";
 import User from "../src/models/User";
 
 const ObjectId = require('mongodb').ObjectID;
 const expect = chai.expect;
-const request = require('supertest');
 
-describe('GET /api/pokemons', () => {
+describe('Pokemons Spec', () => {
 
     let token;
 
