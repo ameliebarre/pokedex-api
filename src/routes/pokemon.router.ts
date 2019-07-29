@@ -13,7 +13,7 @@ class PokemonRouter {
     }
 
     routes() {
-        this.router.get('/', this.pokemonController.findAllPokemon);
+        this.router.get('/', this.pokemonController.getAllPokemon);
         this.router.get('/:slug', this.pokemonController.findPokemonBySlug);
         this.router.post('/', this.pokemonController.createPokemon);
         this.router.put('/:slug', this.pokemonController.updatePokemon);

@@ -9,7 +9,7 @@ class AuthController {
 
     public register = async(req: Request, res: Response) => {
         try {
-            let username = req.body.username;
+            let username = req.body.name;
             let email = req.body.email;
             let password = req.body.password;
 
@@ -57,7 +57,7 @@ class AuthController {
             this.checkEmailFormat(reg, email);
 
             let user = await User.findOne({ email: email });
-
+            
             if (!user) {
                 res.status(500).json({
                     success: false,
@@ -66,7 +66,6 @@ class AuthController {
             }
 
             let userPassword = await bcrypt.compare(password, user.password);
-            let firstTime: boolean;
 
             if (!userPassword) {
                 res.status(400).json({
@@ -76,22 +75,18 @@ class AuthController {
             } else {
                 let expires = moment().add(1,'days').valueOf();
 
-                if (user.isFirstTime) {
-                    firstTime = true;
-                } else {
-                    firstTime = false;
-                }
-
                 const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-                    expiresIn: expires // 1 week
+                    expiresIn: expires // 1 day
                 });
-
-                user['isFirstTime'] = firstTime;
 
                 res.status(200).json({
                     token: token,
                     expiresAt: expires,
-                    user: user
+                    user: {
+                        username: user.username,
+                        email: user.email,
+                        isFirstTime: user.isFirstTime
+                    }
                 });
             }
 

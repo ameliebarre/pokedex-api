@@ -12,7 +12,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public findAllPokemon(req: Request, res: Response) {
+    public async getAllPokemon(req: Request, res: Response) {
 
         try {
             const populateQuery = [
@@ -21,14 +21,10 @@ class PokemonController {
                 { path:'weaknesses', select:'name color' }
             ];
 
-            Pokemon.find({}, (error, pokemons) => {
-                if (error) {
-                    throw error;
-                }
+            const pokemons = await Pokemon.find({});
 
-                return res.status(200).json(pokemons);
+            return res.status(200).json(pokemons);
 
-            }).populate(populateQuery);
         } catch(error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
