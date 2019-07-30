@@ -10,17 +10,7 @@ export const GameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    picture: {
-        type: String,
-        required: true
-    },
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
-});
-
-GameSchema.virtual('games', {
-    ref: 'Game',
-    localField: '_id',
-    foreignField: 'pokemons'
 });
 
 export default mongoose.model<IGame>('Game', GameSchema);

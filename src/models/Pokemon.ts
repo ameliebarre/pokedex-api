@@ -71,16 +71,4 @@ const PokemonSchema = new mongoose.Schema({
     weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }]
 });
 
-PokemonSchema.virtual('pokemons', {
-    ref: 'Pokemon',
-    localField: '_id',
-    foreignField: 'evolution'
-});
-
-PokemonSchema.virtual('pokemonTypes', {
-    ref: 'Type',
-    localField: '_id',
-    foreignField: 'type'
-});
-
 export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);
