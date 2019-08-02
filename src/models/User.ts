@@ -1,6 +1,19 @@
 import * as mongoose from 'mongoose';
 import IUser from "../interfaces/IUser";
 
+const pokemonSchema = new mongoose.Schema(
+    {
+        pokemons: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Pokemon',
+            games: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Game',
+            }
+        },
+    }
+);
+
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -36,17 +49,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: ['USER']
     },
-    pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
+    pokemons: [pokemonSchema],
     created_at: {
         type: Date,
         default: Date.now
     }
-});
-
-UserSchema.virtual('users', {
-    ref: 'User',
-    localField: '_id',
-    foreignField: 'pokemons'
 });
 
 export default mongoose.model<IUser>('User', UserSchema);

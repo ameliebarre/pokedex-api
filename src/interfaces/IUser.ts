@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import IPokemon from "./IPokemon";
+import IGame from "./IGame";
 
 export default interface IUser extends mongoose.Document {
     name: string;
@@ -16,5 +16,7 @@ export default interface IUser extends mongoose.Document {
     password: string;
     isFirstTime: boolean;
     permissions: Array<any>;
-    pokemons: IPokemon;
+    pokemons: Array<{
+        games: Array<IGame>
+    }>;
 }

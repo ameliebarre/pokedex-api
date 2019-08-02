@@ -21,7 +21,7 @@ class PokemonController {
                 { path:'weaknesses', select:'name color' }
             ];
 
-            const pokemons = await Pokemon.find({});
+            const pokemons = await Pokemon.find({}).populate(populateQuery);
 
             return res.status(200).json(pokemons);
 

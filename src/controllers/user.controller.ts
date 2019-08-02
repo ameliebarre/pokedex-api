@@ -29,7 +29,7 @@ class UserController
 
             let id = req.params.id;
 
-            let user = await User.findById(id);
+            let user = await User.findById(id).populate('games.pokemons');
 
             if (user === null) {
                 throw {
