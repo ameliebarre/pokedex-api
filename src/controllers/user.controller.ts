@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as bcrypt from "bcryptjs";
+import * as _ from 'lodash';
 
 import User from "../models/User";
 
@@ -29,7 +30,14 @@ class UserController
 
             let id = req.params.id;
 
-            let user = await User.findById(id).populate('games.pokemons');
+            const populateQuery = [
+                { path: 'games.game' },
+                { path: 'games.game', select: { pokemons: 0, _id: 0 } },
+                { path:'games.catched', populate: { path: 'types', model: 'Type', select: { '_id': 0 } } },
+                { path:'games.catched', populate: { path: 'weaknesses', model: 'Type', select: { '_id': 0 } } }
+            ];
+
+            let user = await User.findById(id).populate(populateQuery);
 
             if (user === null) {
                 throw {

@@ -10,6 +10,7 @@ export const GameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    realeasedDate: Date,
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 

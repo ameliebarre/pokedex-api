@@ -83,7 +83,7 @@ class App {
 
         this.app.use('/', router);
         this.app.use('/auth', AuthRouter);
-        this.app.use('/api/users', UserRouter);
+        this.app.use('/api/profile', UserRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
         this.app.use('/api/consoles', ConsoleRouter);

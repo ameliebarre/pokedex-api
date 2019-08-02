@@ -1,16 +1,18 @@
 import * as mongoose from 'mongoose';
 import IUser from "../interfaces/IUser";
 
-const pokemonSchema = new mongoose.Schema(
+const catchedSchema = new mongoose.Schema(
     {
-        pokemons: {
+        game: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Pokemon',
-            games: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Game',
-            }
+            ref: 'Game',
         },
+        catched: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Pokemon',
+            }
+        ]
     }
 );
 
@@ -49,7 +51,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: ['USER']
     },
-    pokemons: [pokemonSchema],
+    games: [catchedSchema],
     created_at: {
         type: Date,
         default: Date.now
