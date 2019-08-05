@@ -12,17 +12,16 @@ class ConsoleController {
      *
      * @returns {Promise<void>}
      */
-    public getAllConsoles(req: Request, res: Response)
+    public async getAllConsoles(req: Request, res: Response)
     {
         try {
-            Console.find({}, (error, consoles) => {
-                if (error) {
-                    throw error;
-                }
+            const populateQuery = [
+                { path:'games', select: { _id: 0, pokemons: 0 } },
+            ];
 
-                return res.status(200).json(consoles);
+            const consoles = await Console.find({}).populate(populateQuery);
 
-            }).populate('games');
+            return res.status(200).json(consoles);
 
         } catch(error) {
             res.status(500).send({ message: error.message, success: "false" });
