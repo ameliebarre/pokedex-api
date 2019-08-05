@@ -62,10 +62,13 @@ const PokemonSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    evolution: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
-    evolution_way: {
-        type: String,
-        default: null
+    parent: {
+        pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+        evolution: { type: String }
+    },
+    children: {
+        pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+        evolution: { type: String }
     },
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }]
