@@ -4,7 +4,7 @@ import app from '../src/app';
 
 const expect = chai.expect;
 
-describe.only('Game Spec', () => {
+describe('Game Spec', () => {
 
     it('should get all games', async() => {
        await supertest(app)

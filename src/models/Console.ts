@@ -11,10 +11,6 @@ export const ConsoleSchema = new Schema({
         type: String,
         required: true
     },
-    releasedDate: {
-        type: String,
-        required: true
-    },
     games: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
 });
 

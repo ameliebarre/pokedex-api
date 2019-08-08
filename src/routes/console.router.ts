@@ -15,6 +15,7 @@ class ConsoleRouter {
 
     routes() {
         this.router.get('/', this.consoleController.getAllConsoles);
+        this.router.post('/', this.consoleController.postConsole);
     }
 }
 
