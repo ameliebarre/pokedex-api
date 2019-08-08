@@ -42,6 +42,13 @@ const PokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    pokemon_family: {
+        type: String
+    },
+    talents: {
+        type: Array,
+        default: []
+    },
     description: {
         type: String,
         required: true
