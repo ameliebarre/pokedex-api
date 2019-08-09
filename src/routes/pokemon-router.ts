@@ -18,6 +18,7 @@ class PokemonRouter {
         this.router.post('/', this.pokemonController.createPokemon);
         this.router.put('/:slug', this.pokemonController.updatePokemon);
         this.router.delete('/:slug', this.pokemonController.deletePokemon);
+        this.router.post('/generations', this.pokemonController.filterByGeneration);
     }
 }
 

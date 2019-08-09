@@ -114,7 +114,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public deletePokemon = async(req, res) => {
+    public async deletePokemon(req: Request, res: Response) {
         try {
             const pokemon = await Pokemon.findOneAndDelete({ slug: req.params.slug });
 
@@ -126,6 +126,28 @@ class PokemonController {
                 status: 'success',
                 message: 'Le Pokemon a été été supprimé avec succès'
             });
+        } catch (error) {
+            res.status(500).send({ message: error.message, success: "false" });
+        }
+    };
+
+    /**
+     * Get Pokemons by the generation
+     *
+     * @param {e.Request} req
+     * @param {e.Response} res
+     *
+     * @returns {Promise<void>}
+     */
+    public async filterByGeneration(req: Request, res: Response) {
+        try {
+
+            const generations = req.body.generations;
+
+            const pokemons = await Pokemon.find({ generation: { $in: generations } });
+
+            res.status(200).json(pokemons);
+
         } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }

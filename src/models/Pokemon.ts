@@ -6,11 +6,19 @@ const PokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    english_name: {
+        type: String,
+        required: true
+    },
+    japanese_name: {
+        type: String,
+        required: true
+    },
     slug: {
         type: String,
         required: true
     },
-    picture: {
+    national_number: {
         type: String,
         required: true
     },
@@ -62,11 +70,11 @@ const PokemonSchema = new mongoose.Schema({
         required: false
     },
     height: {
-        type: String,
+        type: Number,
         required: true
     },
     weight: {
-        type: String,
+        type: Number,
         required: true
     },
     hp: {
