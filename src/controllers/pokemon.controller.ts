@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import Pokemon from "../models/Pokemon";
+import Type from "../models/Type";
 
 class PokemonController {
 
@@ -149,6 +150,38 @@ class PokemonController {
             res.status(200).json(pokemons);
 
         } catch (error) {
+            res.status(500).send({ message: error.message, success: "false" });
+        }
+    }
+
+    /**
+     * Get Pokemons by their type
+     *
+     * @param {Request} req
+     * @param {Response} res
+     *
+     * @returns {Promise<void>}
+     */
+    public async filterByTypes(req: Request, res: Response) {
+        try {
+            const types = req.body.types;
+            const typeIds = [];
+
+            // Get each types by its name
+            const findTypes = await Type.find({ name: { $in: types } });
+
+            // Get the ID of the type and push it in an array
+            findTypes.forEach(type => {
+                typeIds.push(type._id.toString());
+            });
+
+            // For each type IDs, find Pokemons associated for each type in the typeIds array
+            const pokemons = await Pokemon.find({ types: { $in: typeIds } });
+
+            res.status(200).json(pokemons);
+
+        } catch (error) {
+            console.log(error);
             res.status(500).send({ message: error.message, success: "false" });
         }
     }

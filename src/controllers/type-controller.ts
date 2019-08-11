@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 import Type from "../models/Type";
 
 class TypeController {
@@ -10,10 +12,10 @@ class TypeController {
      *
      * @returns {Promise<void>}
      */
-    public findAllTypes = async(req, res) => {
+    public async findAllTypes(req: Request, res: Response) {
         try {
             const types = await Type.find({});
-            res.status(200).send(types);
+            res.status(200).json(types);
         } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
