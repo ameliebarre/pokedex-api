@@ -47,7 +47,8 @@ class PokemonController {
         const populateQuery = [
             { path:'types', select:'name color' },
             { path:'weaknesses', select:'name color' },
-            { path:'evolution', select:'name picture number' }
+            { path:'evolutions.parent.pokemon', select:'name' },
+            { path:'evolutions.children.pokemon', select:'name' }
         ];
 
         try {
