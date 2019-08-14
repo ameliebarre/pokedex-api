@@ -1,6 +1,76 @@
 import * as mongoose from 'mongoose';
 import IPokemon from "../interfaces/IPokemon";
 
+
+const pokedexSchema = [
+    {
+        national: { type: String, required: true }
+    },
+    {
+        kanto: { type: String, required: true }
+    },
+    {
+        johto: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    },
+    {
+        hoenn: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    },
+    {
+        sinnoh: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    },
+    {
+        kalos: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    },
+    {
+        alola: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    },
+    {
+        unys: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
+    }
+];
+
 const PokemonSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,38 +88,7 @@ const PokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    national_number: {
-        type: String,
-        required: true
-    },
-    kanto_number: {
-        type: String,
-        required: true
-    },
-    johto_number: {
-        type: String,
-        required: true
-    },
-    hoenn_number: {
-        type: String,
-        required: true
-    },
-    sinnoh_number: {
-        type: String,
-        required: true
-    },
-    kalos_number: {
-        type: String,
-        required: true
-    },
-    alola_number: {
-        type: String,
-        required: true
-    },
-    unys_number: {
-        type: String,
-        required: true
-    },
+    pokedex: pokedexSchema,
     pokemon_family: {
         type: String
     },
@@ -101,28 +140,18 @@ const PokemonSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    parent: {
-        pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
-        evolution: { type: String }
-    },
-    children: {
-        pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
-        evolution: { type: String }
+    evolutions: {
+        parent: {
+            pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+            evolution: { type: String }
+        },
+        children: {
+            pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+            evolution: { type: String }
+        },
     },
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }]
-});
-
-PokemonSchema.virtual('pokemons', {
-    ref: 'Pokemon',
-    localField: '_id',
-    foreignField: 'evolution'
-});
-
-PokemonSchema.virtual('pokemonTypes', {
-    ref: 'Type',
-    localField: '_id',
-    foreignField: 'type'
 });
 
 export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);
