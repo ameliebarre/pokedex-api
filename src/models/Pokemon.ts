@@ -4,10 +4,14 @@ import IPokemon from "../interfaces/IPokemon";
 
 const pokedexSchema = [
     {
-        national: { type: String, required: true }
-    },
-    {
-        kanto: { type: String, required: true }
+        kanto: {
+            versions: [
+                {
+                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
+                    number: { type: String }
+                }
+            ]
+        }
     },
     {
         johto: {
@@ -88,6 +92,7 @@ const PokemonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    national: { type: String, required: true },
     pokedex: pokedexSchema,
     pokemon_family: {
         type: String
