@@ -10,10 +10,6 @@ export const GameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
-    },
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 

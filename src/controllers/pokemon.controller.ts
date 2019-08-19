@@ -17,9 +17,11 @@ class PokemonController {
 
         try {
             const populateQuery = [
-                { path:'evolution', select:'name picture number' },
-                { path:'types', select:'name color' },
-                { path:'weaknesses', select:'name color' }
+                { path:'evolutions.parent.pokemon', select: 'name' },
+                { path:'evolutions.children.pokemon', select: 'name picture number' },
+                { path:'types', select: 'name color' },
+                { path:'weaknesses', select: 'name color' },
+                { path: 'pokedex.game', select: 'name' }
             ];
 
             Pokemon.find({}, (error, pokemons) => {
@@ -43,15 +45,16 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public findPokemonBySlug = async(req, res) => {
-        const populateQuery = [
-            { path:'types', select:'name color' },
-            { path:'weaknesses', select:'name color' },
-            { path:'evolutions.parent.pokemon', select:'name' },
-            { path:'evolutions.children.pokemon', select:'name' }
-        ];
-
+    public async findPokemonBySlug(req: Request, res: Response) {
         try {
+            const populateQuery = [
+                { path:'evolutions.parent.pokemon', select: 'name' },
+                { path:'evolutions.children.pokemon', select: 'name picture number' },
+                { path:'types', select: 'name color' },
+                { path:'weaknesses', select: 'name color' },
+                { path: 'pokedex.game', select: 'name' }
+            ];
+
             const pokemon = await Pokemon.find({ slug: req.params.slug }).populate(populateQuery);
 
             if (pokemon.length === 0) {
@@ -73,7 +76,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public createPokemon = async(req, res) => {
+    public async createPokemon(req: Request, res: Response) {
         try {
             const pokemon = new Pokemon(req.body);
             await pokemon.save();
@@ -92,7 +95,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public updatePokemon = async(req, res) => {
+    public async updatePokemon(req: Request, res: Response) {
         try {
             const pokemon = await Pokemon.findOneAndUpdate({ slug: req.params.slug }, req.body);
 

@@ -1,79 +1,6 @@
 import * as mongoose from 'mongoose';
 import IPokemon from "../interfaces/IPokemon";
-
-
-const pokedexSchema = [
-    {
-        kanto: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        johto: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        hoenn: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        sinnoh: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        kalos: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        alola: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    },
-    {
-        unys: {
-            versions: [
-                {
-                    game: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' },
-                    number: { type: String }
-                }
-            ]
-        }
-    }
-];
+require('../models/Game');
 
 const PokemonSchema = new mongoose.Schema({
     name: {
@@ -93,8 +20,18 @@ const PokemonSchema = new mongoose.Schema({
         required: true
     },
     national: { type: String, required: true },
-    pokedex: pokedexSchema,
-    pokemon_family: {
+    kanto: { type: String, required: true },
+    johto_oac: { type: String, required: true },
+    johto_hgss: { type: String, required: true },
+    hoenn_rse: { type: String, required: true },
+    hoenn_rosa: { type: String, required: true },
+    sinnoh: { type: String, required: true },
+    unys_nb: { type: String, required: true },
+    unys_n2b2: { type: String, required: true },
+    kalos: { type: String, required: true },
+    alola_sl: { type: String, required: true },
+    alola_usul: { type: String, required: true },
+    family: {
         type: String
     },
     talents: {
