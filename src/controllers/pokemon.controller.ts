@@ -55,9 +55,9 @@ class PokemonController {
                 { path: 'pokedex.game', select: 'name' }
             ];
 
-            const pokemon = await Pokemon.find({ slug: req.params.slug }).populate(populateQuery);
+            const pokemon = await Pokemon.findOne({ slug: req.params.slug }).populate(populateQuery);
 
-            if (pokemon.length === 0) {
+            if (!pokemon) {
                 throw new Error('Pokemon does not exist');
             }
 
