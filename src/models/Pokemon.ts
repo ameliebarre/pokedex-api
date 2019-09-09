@@ -93,7 +93,9 @@ const PokemonSchema = new mongoose.Schema({
         },
     },
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
-    weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }]
+    weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
+    next: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
+    prev: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }]
 });
 
 export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);
