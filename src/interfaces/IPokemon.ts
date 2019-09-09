@@ -4,10 +4,25 @@ import IType from "./IType";
 export default interface IPokemon extends mongoose.Document {
     name: string,
     slug: string,
-    national_number: string,
-    johto_number: string,
+    english_name: string,
+    japanese_name: string,
+    national: string,
+    kanto: string,
+    johto_oac: string,
+    johto_hgss: string,
+    hoenn_rse: string,
+    hoenn_rosa: string,
+    sinnoh: string,
+    unys_nb: string,
+    unys_n2b2: string,
+    kalos: string,
+    alola_sl: string,
+    alola_usul: string,
+    family: string,
+    talents: Array<string>,
     description: string,
-    sex: [],
+    sex: Array<string>,
+    generation: number,
     height: string,
     weight: string,
     hp: number,
@@ -16,8 +31,18 @@ export default interface IPokemon extends mongoose.Document {
     sp_attack: number,
     sp_defense: number,
     speed: number,
-    evolution: IPokemon,
-    evolution_way: string,
-    types: IType,
-    weaknesses: IType
+    evolutions: {
+        parent: {
+            pokemon: IPokemon,
+            evolution: string
+        },
+        children: {
+            pokemon: IPokemon,
+            evolution: string
+        }
+    },
+    types: Array<IType>,
+    weaknesses: Array<IType>,
+    next: IPokemon,
+    prev: IPokemon
 }
