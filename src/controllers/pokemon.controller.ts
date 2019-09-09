@@ -45,7 +45,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public async findPokemonBySlug(req: Request, res: Response) {
+    public async findOnePokemon(req: Request, res: Response) {
         try {
             const populateQuery = [
                 { path:'evolutions.parent.pokemon', select: 'name' },
@@ -55,8 +55,36 @@ class PokemonController {
                 { path: 'pokedex.game', select: 'name' }
             ];
 
-            const pokemon = await Pokemon.findOne({ slug: req.params.slug }).populate(populateQuery);
+            const filter = {
+                $or: [
+                    {
+                        'national': req.params.id
+                    },
+                    {
+                        'slug': req.params.id
+                    }
+                ]
+            };
 
+            const pokemon = await Pokemon.findOne(filter).populate(populateQuery);
+            const next = await Pokemon.findOne({ national: {$gt: req.params.id}}).sort({ national: 1 });
+            const prev = await Pokemon.findOne({ national: {$lt: pokemon.national }}).sort({ national: -1 });
+
+            // Find the next Pokemon
+            if (next !== null) {
+                pokemon.next = next;
+            } else {
+                pokemon.next = null
+            }
+
+            // Find the previous Pokemon
+            if (prev !== null) {
+                pokemon.prev = prev;
+            } else {
+                pokemon.prev = null
+            }
+
+            // If the Pokemon does not exists, send an error
             if (!pokemon) {
                 throw new Error('Pokemon does not exist');
             }
