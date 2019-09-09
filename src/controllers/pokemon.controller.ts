@@ -52,7 +52,7 @@ class PokemonController {
                 { path:'evolutions.children.pokemon', select: 'name picture number' },
                 { path:'types', select: 'name color' },
                 { path:'weaknesses', select: 'name color' },
-                { path: 'pokedex.game', select: 'name' }
+                { path: 'pokedex.game', select: 'name' },
             ];
 
             const filter = {
@@ -67,7 +67,7 @@ class PokemonController {
             };
 
             const pokemon = await Pokemon.findOne(filter).populate(populateQuery);
-            const next = await Pokemon.findOne({ national: {$gt: req.params.id}}).sort({ national: 1 });
+            const next = await Pokemon.findOne({ national: {$gt: pokemon.national }}).sort({ national: 1 });
             const prev = await Pokemon.findOne({ national: {$lt: pokemon.national }}).sort({ national: -1 });
 
             // Find the next Pokemon
