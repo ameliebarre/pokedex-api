@@ -1,7 +1,8 @@
-import * as mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
+
 import IGame from "../interfaces/IGame";
 
-export const GameSchema = new mongoose.Schema({
+const GameSchema = new Schema({
     name: {
        type: String,
        required: true
@@ -10,7 +11,7 @@ export const GameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
+    pokemons: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 
-export default mongoose.model<IGame>('Game', GameSchema);
+export default model<IGame>('Game', GameSchema);

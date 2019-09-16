@@ -65,6 +65,8 @@ class App {
         require('./models/Pokemon');
         require('./models/Type');
         require('./models/User');
+        require('./models/Capacity');
+        require('./models/Game');
     }
 
     public routes(): void {

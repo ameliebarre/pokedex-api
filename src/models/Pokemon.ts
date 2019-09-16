@@ -1,8 +1,10 @@
-import * as mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
+
 import IPokemon from "../interfaces/IPokemon";
+
 require('../models/Game');
 
-const PokemonSchema = new mongoose.Schema({
+const PokemonSchema = new Schema({
     names: {
         french_name: {
             type: String,
@@ -94,24 +96,24 @@ const PokemonSchema = new mongoose.Schema({
     },
     evolutions: {
         parent: {
-            pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+            pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
         },
         children: {
-            pokemon: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+            pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
         },
     },
     capacities: [
         {
-            capacity: { type: mongoose.Schema.Types.ObjectId, ref: 'Capacity' },
+            capacity: { type: Schema.Types.ObjectId, ref: 'Capacity' },
             generation: Number
         }
     ],
-    types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
-    weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
-    next: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
-    prev: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }
+    types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
+    weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
+    next: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
+    prev: { type: Schema.Types.ObjectId, ref: 'Pokemon' }
 });
 
-export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);
+export default model<IPokemon>('Pokemon', PokemonSchema);
