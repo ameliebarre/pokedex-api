@@ -3,34 +3,38 @@ import IPokemon from "../interfaces/IPokemon";
 require('../models/Game');
 
 const PokemonSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    english_name: {
-        type: String,
-        required: true
-    },
-    japanese_name: {
-        type: String,
-        required: true
+    names: {
+        french_name: {
+            type: String,
+            required: true
+        },
+        english_name: {
+            type: String,
+            required: true
+        },
+        japanese_name: {
+            type: String,
+            required: true
+        },
     },
     slug: {
         type: String,
         required: true
     },
-    national: { type: String, required: true },
-    kanto: { type: String, required: true },
-    johto_oac: { type: String, required: true },
-    johto_hgss: { type: String, required: true },
-    hoenn_rse: { type: String, required: true },
-    hoenn_rosa: { type: String, required: true },
-    sinnoh: { type: String, required: true },
-    unys_nb: { type: String, required: true },
-    unys_n2b2: { type: String, required: true },
-    kalos: { type: String, required: true },
-    alola_sl: { type: String, required: true },
-    alola_usul: { type: String, required: true },
+    pokedex: {
+        national: String,
+        kanto: String,
+        johto_oac: String,
+        johto_hgss: String,
+        hoenn_rse: String,
+        hoenn_rosa: String,
+        sinnoh: String,
+        unys_nb: String,
+        unys_n2b2: String,
+        kalos: String,
+        alola_sl: String,
+        alola_usul: String,
+    },
     family: {
         type: String
     },
@@ -58,27 +62,33 @@ const PokemonSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    hp: {
-        type: Number,
-        required: true
+    statistics: {
+        hp: {
+            type: Number,
+            required: true
+        },
+        attack: {
+            type: Number,
+            required: true
+        },
+        defense: {
+            type: Number,
+            required: true
+        },
+        sp_attack: {
+            type: Number,
+            required: true
+        },
+        sp_defense: {
+            type: Number,
+            required: true
+        },
+        speed: {
+            type: Number,
+            required: true
+        },
     },
-    attack: {
-        type: Number,
-        required: true
-    },
-    defense: {
-        type: Number,
-        required: true
-    },
-    sp_attack: {
-        type: Number,
-        required: true
-    },
-    sp_defense: {
-        type: Number,
-        required: true
-    },
-    speed: {
+    catch_rate: {
         type: Number,
         required: true
     },
@@ -92,10 +102,11 @@ const PokemonSchema = new mongoose.Schema({
             evolution: { type: String }
         },
     },
+    capacities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Capacity' }],
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
-    next: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
-    prev: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }]
+    next: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+    prev: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }
 });
 
 export default mongoose.model<IPokemon>('Pokemon', PokemonSchema);
