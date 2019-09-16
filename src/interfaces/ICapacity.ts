@@ -12,9 +12,9 @@ export default interface ICapacity extends Document {
     precision: number;
     pp: number;
     generation: Array<{
-        puissance: number,
-        precision: number,
-        pp: number,
+        puissance: string,
+        precision: string,
+        pp: string,
         level: number,
         number: Number,
         games: Array<IGame>

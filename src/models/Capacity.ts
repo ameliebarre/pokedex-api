@@ -15,9 +15,9 @@ const CapacitySchema = new Schema({
     type: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
     generation: [
         {
-            puissance: Number,
-            precision: Number,
-            pp: Number,
+            puissance: String,
+            precision: String,
+            pp: String,
             level: Number,
             number: Number,
             games: [{ type: Schema.Types.ObjectId, ref: 'Game' }]
