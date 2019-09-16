@@ -102,7 +102,12 @@ const PokemonSchema = new mongoose.Schema({
             evolution: { type: String }
         },
     },
-    capacities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Capacity' }],
+    capacities: [
+        {
+            capacity: { type: mongoose.Schema.Types.ObjectId, ref: 'Capacity' },
+            generation: Number
+        }
+    ],
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     next: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },

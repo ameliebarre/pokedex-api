@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import { Document } from "mongoose";
 
-export default interface IGame extends mongoose.Document {
+export default interface IGame extends Document {
     name: string,
     slug: string,
     picture: string
