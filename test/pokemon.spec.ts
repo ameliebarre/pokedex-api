@@ -8,7 +8,7 @@ import User from "../src/models/User";
 const ObjectId = require('mongodb').ObjectID;
 const expect = chai.expect;
 
-describe.only('GET /api/pokemons', () => {
+describe('Pokemon Specs', () => {
 
     before(async() => {
 
