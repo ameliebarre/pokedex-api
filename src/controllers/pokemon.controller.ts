@@ -6,14 +6,14 @@ import Type from "../models/Type";
 class PokemonController {
 
     /**
-     * Find all Pokemons
+     * Get all Pokemons
      *
      * @param req
      * @param res
      *
      * @returns {Promise<void>}
      */
-    public findAllPokemon(req: Request, res: Response) {
+    public async getAllPokemon(req: Request, res: Response) {
 
         try {
             const populateQuery = [
@@ -45,7 +45,7 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public async findOnePokemon(req: Request, res: Response) {
+    public async getOnePokemon(req: Request, res: Response) {
         try {
             const populateQuery = [
                 { path:'evolutions.parent.pokemon', select: 'name' },
