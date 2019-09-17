@@ -11,6 +11,7 @@ const GameSchema = new Schema({
         type: String,
         required: true
     },
+    released_date: Date,
     pokemons: [{ type: Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 
