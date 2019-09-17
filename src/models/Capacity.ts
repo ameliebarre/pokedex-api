@@ -12,7 +12,7 @@ const CapacitySchema = new Schema({
         type: String,
         required: true
     },
-    type: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
+    type: { type: Schema.Types.ObjectId, ref: 'Type' },
     generation: [
         {
             puissance: String,
