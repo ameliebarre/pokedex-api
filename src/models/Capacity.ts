@@ -18,7 +18,7 @@ const CapacitySchema = new Schema({
             puissance: String,
             precision: String,
             pp: String,
-            level: Number,
+            level: String,
             number: Number,
             games: [{ type: Schema.Types.ObjectId, ref: 'Game' }]
         }

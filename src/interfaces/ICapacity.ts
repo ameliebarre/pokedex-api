@@ -8,14 +8,11 @@ export default interface ICapacity extends Document {
     slug: string;
     description: string;
     type: IType;
-    puissance: number;
-    precision: number;
-    pp: number;
     generation: Array<{
         puissance: string,
         precision: string,
         pp: string,
-        level: number,
+        level: string,
         number: Number,
         games: Array<IGame>
     }>;
