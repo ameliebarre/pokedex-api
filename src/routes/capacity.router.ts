@@ -5,7 +5,7 @@ import CapacityController from "../controllers/capacity.controller";
 class CapacityRouter {
 
     router: Router;
-    capacityController: CapacityController
+    capacityController: CapacityController;
 
     constructor() {
         this.router = Router();
@@ -15,7 +15,9 @@ class CapacityRouter {
 
     routes() {
         this.router.get('/', this.capacityController.getAllCapacities);
-        this.router.get('/:id', this.capacityController.getOneCapacity);
+        this.router.get('/:slug', this.capacityController.getOneCapacity);
+        this.router.post('/', this.capacityController.createCapacity);
+        this.router.put('/:id', this.capacityController.updateCapacity);
     }
 
 }
