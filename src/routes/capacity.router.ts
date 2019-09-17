@@ -15,6 +15,7 @@ class CapacityRouter {
 
     routes() {
         this.router.get('/', this.capacityController.getAllCapacities);
+        this.router.get('/:id', this.capacityController.getOneCapacity);
     }
 
 }
