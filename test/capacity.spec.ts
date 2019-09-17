@@ -1,7 +1,8 @@
 import * as supertest from 'supertest';
 import * as chai from 'chai';
-import app from '../src/app';
+import * as _ from 'lodash';
 
+import app from '../src/app';
 import Capacity from "../src/models/Capacity";
 import Game from "../src/models/Game";
 import Type from "../src/models/Type";
@@ -69,8 +70,27 @@ describe.only('Capacity Specs', () => {
                 .get('/api/capacities')
                 .expect(200)
                 .then(response => {
-                    console.log(response.body);
+                    const index = _.findIndex(response.body, { name: 'Capacity Test' });
+                    expect(response.body[index].name).to.eql('Capacity Test');
+                    expect(response.body).to.be.an('array');
                 });
+        });
+
+        it('should get one capacity by its slug', () => {
+           return supertest(app)
+               .get('/api/capacities/capacityTest')
+               .expect(200)
+               .then(response => {
+                  expect(response.body.name).to.eql('Capacity Test');
+                  expect(response.body.slug).to.eql('capacityTest');
+
+                  expect(response.body.generation.length).to.eql(1);
+                  expect(response.body.generation[0].games.length).to.eql(2);
+
+                  expect(response.body.generation[0]).to.have.property('precision');
+                  expect(response.body.generation[0]).to.have.property('pp');
+                  expect(response.body.generation[0]).to.have.property('puissance');
+               });
         });
 
     });
