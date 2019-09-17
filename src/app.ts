@@ -7,11 +7,12 @@ import * as helmet from 'helmet';
 import * as cors from 'cors';
 import * as referrerPolicy from 'referrer-policy';
 
-import PokemonRouter from "./routes/pokemon-router";
-import AuthRouter from "./routes/auth-router";
-import TypeRouter from "./routes/type-router";
-import UserRouter from "./routes/user-router";
-import TrainerRouter from "./routes/trainer-router";
+import PokemonRouter from "./routes/pokemon.router";
+import AuthRouter from "./routes/auth.router";
+import TypeRouter from "./routes/type.router";
+import UserRouter from "./routes/user.router";
+import TrainerRouter from "./routes/trainer.router";
+import CapacityRouter from "./routes/capacity.router";
 import AuthMiddleware from './middlewares/auth-middleware';
 
 //Require dotenv
@@ -78,14 +79,13 @@ class App {
             });
         });
 
-        // routes.initialize(app);
-
         this.app.use('/', router);
         this.app.use('/auth', AuthRouter);
         this.app.use('/api/users', UserRouter);
         this.app.use('/api/pokemons', PokemonRouter);
         this.app.use('/api/types', TypeRouter);
         this.app.use('/api/trainers', TrainerRouter);
+        this.app.use('/api/capacities', CapacityRouter);
     }
 
     private mongoSetup(): void {
