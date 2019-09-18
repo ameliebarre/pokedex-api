@@ -17,7 +17,7 @@ class CapacityRouter {
         this.router.get('/', this.capacityController.getAllCapacities);
         this.router.get('/:slug', this.capacityController.getOneCapacity);
         this.router.post('/', this.capacityController.createCapacity);
-        this.router.put('/:id', this.capacityController.updateCapacity);
+        this.router.put('/:slug', this.capacityController.updateCapacity);
     }
 
 }

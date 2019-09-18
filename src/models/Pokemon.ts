@@ -1,20 +1,21 @@
 import { Schema, model } from 'mongoose';
 
 import IPokemon from "../interfaces/IPokemon";
+import Game from "./Game";
 
 require('../models/Game');
 
 const PokemonSchema = new Schema({
     names: {
-        french_name: {
+        french: {
             type: String,
             required: true
         },
-        english_name: {
+        english: {
             type: String,
             required: true
         },
-        japanese_name: {
+        japanese: {
             type: String,
             required: true
         },
@@ -107,7 +108,8 @@ const PokemonSchema = new Schema({
     capacities: [
         {
             capacity: { type: Schema.Types.ObjectId, ref: 'Capacity' },
-            generation: Number
+            level: Number,
+            game: Game
         }
     ],
     types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],

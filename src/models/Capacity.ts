@@ -13,14 +13,12 @@ const CapacitySchema = new Schema({
         required: true
     },
     type: { type: Schema.Types.ObjectId, ref: 'Type' },
-    generation: [
+    generations: [
         {
             puissance: String,
             precision: String,
             pp: String,
-            level: String,
-            number: Number,
-            games: [{ type: Schema.Types.ObjectId, ref: 'Game' }]
+            generation: Number
         }
     ],
     ct_cs: String

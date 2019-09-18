@@ -86,7 +86,7 @@ class CapacityController {
     public async updateCapacity(req: Request, res: Response) {
         try {
 
-            const updatedCapacity = await Capacity.findByIdAndUpdate({ _id: req.body.id }, req.body, (err, capacity) => {
+            const updatedCapacity = await Capacity.findOneAndUpdate({ slug: req.body.slug }, req.body, (err, capacity) => {
                 if (err) {
                     return res.status(404).json({ message: "Erreur lors de la modification.", success: false });
                 }
