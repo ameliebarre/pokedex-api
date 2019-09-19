@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 import Pokemon from "../models/Pokemon";
 import Type from "../models/Type";
@@ -67,8 +67,8 @@ class PokemonController {
             };
 
             const pokemon = await Pokemon.findOne(filter).populate(populateQuery);
-            const next = await Pokemon.findOne({ national: {$gt: pokemon.national }}).sort({ national: 1 });
-            const prev = await Pokemon.findOne({ national: {$lt: pokemon.national }}).sort({ national: -1 });
+            const next = await Pokemon.findOne({ national: {$gt: pokemon.pokedex.national }}).sort({ national: 1 });
+            const prev = await Pokemon.findOne({ national: {$lt: pokemon.pokedex.national }}).sort({ national: -1 });
 
             // Find the next Pokemon
             if (next !== null) {
