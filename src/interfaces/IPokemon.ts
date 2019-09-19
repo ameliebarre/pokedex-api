@@ -1,36 +1,46 @@
-import * as mongoose from 'mongoose';
-import IType from "./IType";
+import { Document } from 'mongoose';
 
-export default interface IPokemon extends mongoose.Document {
-    name: string,
+import IType from "./IType";
+import ICapacity from "./ICapacity";
+import IGame from "./IGame";
+
+export default interface IPokemon extends Document {
+    names: {
+        french: string,
+        english: string,
+        japanese: string,
+    };
     slug: string,
-    english_name: string,
-    japanese_name: string,
-    national: string,
-    kanto: string,
-    johto_oac: string,
-    johto_hgss: string,
-    hoenn_rse: string,
-    hoenn_rosa: string,
-    sinnoh: string,
-    unys_nb: string,
-    unys_n2b2: string,
-    kalos: string,
-    alola_sl: string,
-    alola_usul: string,
-    family: string,
-    talents: Array<string>,
-    description: string,
-    sex: Array<string>,
-    generation: number,
-    height: string,
-    weight: string,
-    hp: number,
-    attack: number,
-    defense: number,
-    sp_attack: number,
-    sp_defense: number,
-    speed: number,
+    pokedex: {
+        national: string,
+        kanto: string,
+        johto_oac: string,
+        johto_hgss: string,
+        hoenn_rse: string,
+        hoenn_rosa: string,
+        sinnoh: string,
+        unys_nb: string,
+        unys_n2b2: string,
+        kalos: string,
+        alola_sl: string,
+        alola_usul: string,
+    };
+    family: string;
+    talents: Array<string>;
+    description: string;
+    sex: Array<string>;
+    generation: number;
+    height: string;
+    weight: string;
+    statistics: {
+        hp: number,
+        attack: number,
+        defense: number,
+        sp_attack: number,
+        sp_defense: number,
+        speed: number,
+    };
+    catch_rate: number;
     evolutions: {
         parent: {
             pokemon: IPokemon,
@@ -40,9 +50,14 @@ export default interface IPokemon extends mongoose.Document {
             pokemon: IPokemon,
             evolution: string
         }
-    },
-    types: Array<IType>,
-    weaknesses: Array<IType>,
-    next: IPokemon,
-    prev: IPokemon
+    };
+    capacities: Array<{
+        capacity: ICapacity,
+        level: number,
+        game: IGame
+    }>;
+    types: Array<IType>;
+    weaknesses: Array<IType>;
+    next: IPokemon;
+    prev: IPokemon;
 }

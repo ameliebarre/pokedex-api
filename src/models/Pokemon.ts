@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 import IPokemon from "../interfaces/IPokemon";
-import Game from "./Game";
 
 require('../models/Game');
 
@@ -109,7 +108,7 @@ const PokemonSchema = new Schema({
         {
             capacity: { type: Schema.Types.ObjectId, ref: 'Capacity' },
             level: Number,
-            game: Game
+            game: { type: Schema.Types.ObjectId, ref: 'Game' }
         }
     ],
     types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
