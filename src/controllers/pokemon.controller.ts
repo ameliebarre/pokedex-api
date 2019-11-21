@@ -24,7 +24,7 @@ class PokemonController {
                 { path: 'pokedex.game', select: 'name' }
             ];
 
-            Pokemon.find({}, (error, pokemons) => {
+            await Pokemon.find({}, (error, pokemons) => {
                 if (error) {
                     throw error;
                 }
