@@ -45,14 +45,14 @@ class PokemonController {
      *
      * @returns {Promise<void>}
      */
-    public async getOnePokemon(req: Request, res: Response) {
+    public async getPokemon(req: Request, res: Response) {
         try {
             const populateQuery = [
-                { path:'evolutions.parent.pokemon', select: 'name' },
-                { path:'evolutions.children.pokemon', select: 'name picture number' },
+                { path:'evolutions.parent.pokemon', select: 'names pokedex' },
+                { path:'evolutions.children.pokemon', select: 'names pokedex' },
+                { path:'mega_evolution.pokemon', select: 'names pokedex' },
                 { path:'types', select: 'name color' },
-                { path:'weaknesses', select: 'name color' },
-                { path: 'pokedex.game', select: 'name' },
+                { path:'weaknesses', select: 'name color' }
             ];
 
             const filter = {
@@ -67,8 +67,8 @@ class PokemonController {
             };
 
             const pokemon = await Pokemon.findOne(filter).populate(populateQuery);
-            const next = await Pokemon.findOne({ national: {$gt: pokemon.pokedex.national }}).sort({ national: 1 });
-            const prev = await Pokemon.findOne({ national: {$lt: pokemon.pokedex.national }}).sort({ national: -1 });
+            const next = await Pokemon.findOne({ national: {$gt: pokemon.pokedex[0].number }}).sort({ number: 1 });
+            const prev = await Pokemon.findOne({ national: {$lt: pokemon.pokedex[0].number }}).sort({ number: -1 });
 
             // Find the next Pokemon
             if (next !== null) {
