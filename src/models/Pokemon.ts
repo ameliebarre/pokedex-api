@@ -23,35 +23,38 @@ const PokemonSchema = new Schema({
         type: String,
         required: true
     },
-    pokedex: {
-        national: String,
-        kanto: String,
-        johto_oac: String,
-        johto_hgss: String,
-        hoenn_rse: String,
-        hoenn_rosa: String,
-        sinnoh: String,
-        unys_nb: String,
-        unys_n2b2: String,
-        kalos: String,
-        alola_sl: String,
-        alola_usul: String,
-    },
+    pokedex: [
+        {
+            name: String,
+            key: String,
+            number: String,
+            version: {
+                name: String,
+                key: String,
+            }
+        }
+    ],
+    color: String,
     family: {
         type: String
     },
-    talents: {
-        type: Array,
-        default: []
-    },
+    talents: [
+        {
+            name: String,
+            description: String
+        }
+    ],
     description: {
         type: String,
         required: true
     },
-    sex: {
-        type: Array,
-        required: true
-    },
+    sex: [
+        {
+            label: String,
+            key: String,
+            percentage: Number
+        }
+    ],
     generation: {
         type: Number,
         required: false
@@ -64,31 +67,36 @@ const PokemonSchema = new Schema({
         type: Number,
         required: true
     },
+    egg_group: Array,
     statistics: {
         hp: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
         attack: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
         defense: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
         sp_attack: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
         sp_defense: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
         speed: {
-            type: Number,
-            required: true
+            name: String,
+            value: Number
         },
+    },
+    experience_points: {
+        type: Number,
+        required: true
     },
     catch_rate: {
         type: Number,
@@ -103,14 +111,28 @@ const PokemonSchema = new Schema({
             pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
         },
+        mega: {
+            pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
+            evolution: { type: String }
+        }
     },
-    capacities: [
+    shapes: [
         {
-            capacity: { type: Schema.Types.ObjectId, ref: 'Capacity' },
-            level: Number,
-            game: { type: Schema.Types.ObjectId, ref: 'Game' }
+            name: String,
+            slug: String
         }
     ],
+    localisations: [
+        {
+            game: { type: Schema.Types.ObjectId, ref: 'Game' },
+            localisation: String,
+            generation: Number
+        }
+    ],
+    size: {
+        type: String,
+        required: true
+    },
     types: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
     weaknesses: [{ type: Schema.Types.ObjectId, ref: 'Type' }],
     next: { type: Schema.Types.ObjectId, ref: 'Pokemon' },

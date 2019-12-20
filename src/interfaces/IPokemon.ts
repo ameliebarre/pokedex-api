@@ -11,35 +11,58 @@ export default interface IPokemon extends Document {
         japanese: string,
     };
     slug: string,
-    pokedex: {
-        national: string,
-        kanto: string,
-        johto_oac: string,
-        johto_hgss: string,
-        hoenn_rse: string,
-        hoenn_rosa: string,
-        sinnoh: string,
-        unys_nb: string,
-        unys_n2b2: string,
-        kalos: string,
-        alola_sl: string,
-        alola_usul: string,
-    };
+    pokedex: Array<{
+        name: string,
+        key: string,
+        number: string,
+        version: {
+            name: string,
+            key: string,
+        }
+    }>,
+    color: string;
     family: string;
-    talents: Array<string>;
+    talents: Array<{
+        name: string;
+        description: string;
+    }>;
     description: string;
-    sex: Array<string>;
+    sex: Array<{
+        label: string,
+        key: string,
+        percentage: number
+    }>;
     generation: number;
-    height: string;
-    weight: string;
+    height: number;
+    weight: number;
+    egg_group: Array<string>;
     statistics: {
-        hp: number,
-        attack: number,
-        defense: number,
-        sp_attack: number,
-        sp_defense: number,
-        speed: number,
+        hp: {
+            name: string,
+            value: number
+        },
+        attack: {
+            name: string,
+            value: number
+        },
+        defense: {
+            name: string,
+            value: number
+        },
+        sp_attack: {
+            name: string,
+            value: number
+        },
+        sp_defense: {
+            name: string,
+            value: number
+        },
+        speed: {
+            name: string,
+            value: number
+        },
     };
+    experience_points: number;
     catch_rate: number;
     evolutions: {
         parent: {
@@ -49,12 +72,22 @@ export default interface IPokemon extends Document {
         children: {
             pokemon: IPokemon,
             evolution: string
+        },
+        mega: {
+            pokemon: IPokemon,
+            evolution: string
         }
     };
+    shapes: Array<IPokemon>,
     capacities: Array<{
         capacity: ICapacity,
         level: number,
         game: IGame
+    }>;
+    localisations: Array<{
+        game: IGame,
+        localisation: string,
+        generation: Number
     }>;
     types: Array<IType>;
     weaknesses: Array<IType>;
