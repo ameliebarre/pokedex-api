@@ -78,7 +78,10 @@ export default interface IPokemon extends Document {
             evolution: string
         }
     };
-    shapes: Array<IPokemon>,
+    shapes: Array<{
+        name: String;
+        slug: String;
+    }>,
     capacities: Array<{
         capacity: ICapacity,
         level: number,
