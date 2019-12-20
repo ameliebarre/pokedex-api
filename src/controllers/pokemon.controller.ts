@@ -17,11 +17,12 @@ class PokemonController {
 
         try {
             const populateQuery = [
-                { path:'evolutions.parent.pokemon', select: 'name' },
-                { path:'evolutions.children.pokemon', select: 'name picture number' },
+                { path:'evolutions.parent.pokemon', select: 'names pokedex' },
+                { path:'evolutions.children.pokemon', select: 'names pokedex' },
+                { path:'evolutions.mega.pokemon', select: 'names pokedex' },
                 { path:'types', select: 'name color' },
                 { path:'weaknesses', select: 'name color' },
-                { path: 'pokedex.game', select: 'name' }
+                { path:'localisations.game', select: 'name' }
             ];
 
             await Pokemon.find({}, (error, pokemons) => {
@@ -50,9 +51,10 @@ class PokemonController {
             const populateQuery = [
                 { path:'evolutions.parent.pokemon', select: 'names pokedex' },
                 { path:'evolutions.children.pokemon', select: 'names pokedex' },
-                { path:'mega_evolution.pokemon', select: 'names pokedex' },
+                { path:'evolutions.mega.pokemon', select: 'names pokedex' },
                 { path:'types', select: 'name color' },
-                { path:'weaknesses', select: 'name color' }
+                { path:'weaknesses', select: 'name color' },
+                { path:'localisations.game', select: 'name' }
             ];
 
             const filter = {
