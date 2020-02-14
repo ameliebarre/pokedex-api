@@ -3,8 +3,8 @@ import PokemonController from '../controllers/pokemon.controller';
 
 class PokemonRouter {
 
-    router: Router;
-    pokemonController: PokemonController;
+    public router: Router;
+    public pokemonController: PokemonController;
 
     constructor() {
         this.router = Router();
@@ -12,7 +12,7 @@ class PokemonRouter {
         this.routes();
     }
 
-    routes() {
+    public routes() {
         this.router.get('/', this.pokemonController.getAllPokemon);
         this.router.get('/:id', this.pokemonController.getPokemon);
         this.router.post('/', this.pokemonController.createPokemon);
