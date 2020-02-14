@@ -17,26 +17,21 @@ class PokemonController {
 
         try {
             const populateQuery = [
-                { path:'evolutions.parent.pokemon', select: 'names pokedex' },
-                { path:'evolutions.children.pokemon', select: 'names pokedex' },
-                { path:'evolutions.mega.pokemon', select: 'names pokedex' },
-                { path:'types', select: 'name color' },
-                { path:'weaknesses', select: 'name color' },
-                { path:'localisations.game', select: 'name' }
+                { path: 'evolutions.parent.pokemon', select: 'names pokedex' },
+                { path: 'evolutions.children.pokemon', select: 'names pokedex' },
+                { path: 'evolutions.mega.pokemon', select: 'names pokedex' },
+                { path: 'types', select: 'name color' },
+                { path: 'weaknesses', select: 'name color' },
+                { path: 'localisations.game', select: 'name' }
             ];
 
-            await Pokemon.find({}, (error, pokemons) => {
-                if (error) {
-                    throw error;
-                }
+            const pokemons = await Pokemon.find().sort({ name: 'asc', generation: 'asc' }).populate(populateQuery);
 
-                return res.status(200).json(pokemons);
-
-            }).populate(populateQuery);
-        } catch(error) {
+            return res.status(200).json(pokemons);
+        } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
-    };
+    }
 
     /**
      * Find a Pokemon by slug
@@ -49,12 +44,12 @@ class PokemonController {
     public async getPokemon(req: Request, res: Response) {
         try {
             const populateQuery = [
-                { path:'evolutions.parent.pokemon', select: 'names pokedex' },
-                { path:'evolutions.children.pokemon', select: 'names pokedex' },
-                { path:'evolutions.mega.pokemon', select: 'names pokedex' },
-                { path:'types', select: 'name color' },
-                { path:'weaknesses', select: 'name color' },
-                { path:'localisations.game', select: 'name' }
+                { path: 'evolutions.parent.pokemon', select: 'names pokedex' },
+                { path: 'evolutions.children.pokemon', select: 'names pokedex' },
+                { path: 'evolutions.mega.pokemon', select: 'names pokedex' },
+                { path: 'types', select: 'name color' },
+                { path: 'weaknesses', select: 'name color' },
+                { path: 'localisations.game', select: 'name' }
             ];
 
             const filter = {
@@ -93,7 +88,7 @@ class PokemonController {
 
             res.status(200).json(pokemon);
 
-        } catch(error) {
+        } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
     };
@@ -112,7 +107,7 @@ class PokemonController {
             await pokemon.save();
 
             res.status(200).send(pokemon);
-        } catch(error) {
+        } catch (error) {
             res.status(500).send({ message: error.message, success: "false" });
         }
     };
