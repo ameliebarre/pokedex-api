@@ -103,18 +103,18 @@ const PokemonSchema = new Schema({
         required: true
     },
     evolutions: {
-        parent: {
+        parent: [{
             pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
-        },
-        children: {
+        }],
+        children: [{
             pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
-        },
-        mega: {
+        }],
+        mega: [{
             pokemon: { type: Schema.Types.ObjectId, ref: 'Pokemon' },
             evolution: { type: String }
-        }
+        }]
     },
     shapes: [
         {

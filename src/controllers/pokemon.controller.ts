@@ -44,12 +44,12 @@ class PokemonController {
     public async getPokemon(req: Request, res: Response) {
         try {
             const populateQuery = [
-                { path: 'evolutions.parent.pokemon', select: 'names pokedex' },
-                { path: 'evolutions.children.pokemon', select: 'names pokedex' },
-                { path: 'evolutions.mega.pokemon', select: 'names pokedex' },
-                { path: 'types', select: 'name color' },
-                { path: 'weaknesses', select: 'name color' },
-                { path: 'localisations.game', select: 'name' }
+                { path:'evolutions.parent.pokemon', populate: { path: 'evolutions.parent.pokemon', model: 'Pokemon' } },
+                { path:'evolutions.children.pokemon', populate: { path: 'evolutions.children.pokemon', model: 'Pokemon' } },
+                { path:'evolutions.mega.pokemon', select: 'names' },
+                { path:'types', select: 'name color' },
+                { path:'weaknesses', select: 'name color' },
+                { path:'localisations.game', select: 'name' }
             ];
 
             const filter = {
@@ -64,6 +64,12 @@ class PokemonController {
             };
 
             const pokemon = await Pokemon.findOne(filter).populate(populateQuery);
+
+            // If the Pokemon does not exists, send an error
+            if (!pokemon) {
+                throw new Error('Pokemon does not exist');
+            }
+
             const next = await Pokemon.findOne({ national: {$gt: pokemon.pokedex[0].number }}).sort({ number: 1 });
             const prev = await Pokemon.findOne({ national: {$lt: pokemon.pokedex[0].number }}).sort({ number: -1 });
 
@@ -81,10 +87,7 @@ class PokemonController {
                 pokemon.prev = null
             }
 
-            // If the Pokemon does not exists, send an error
-            if (!pokemon) {
-                throw new Error('Pokemon does not exist');
-            }
+            return res.status(200).json(pokemon);
 
             res.status(200).json(pokemon);
 
@@ -210,7 +213,6 @@ class PokemonController {
             res.status(200).json(pokemons);
 
         } catch (error) {
-            console.log(error);
             res.status(500).send({ message: error.message, success: "false" });
         }
     }

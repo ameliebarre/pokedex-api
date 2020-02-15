@@ -65,18 +65,18 @@ export default interface IPokemon extends Document {
     experience_points: number;
     catch_rate: number;
     evolutions: {
-        parent: {
+        parent: [{
             pokemon: IPokemon,
             evolution: string
-        },
-        children: {
+        }],
+        children: [{
             pokemon: IPokemon,
             evolution: string
-        },
-        mega: {
+        }],
+        mega: [{
             pokemon: IPokemon,
             evolution: string
-        }
+        }]
     };
     shapes: Array<{
         name: String;
