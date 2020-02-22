@@ -12,8 +12,8 @@ class UserRouter {
     }
 
     routes() {
-        this.router.post('/register', this.authController.register);
-        this.router.post('/login', this.authController.login);
+        this.router.post('/signup', this.authController.signUp);
+        this.router.post('/signin', this.authController.signIn);
     }
 }
 
