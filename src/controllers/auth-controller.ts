@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Container } from 'typedi';
 import AuthService from './../services/auth.service';
 import { IUserInputDTO } from './../interfaces/IUser';
+import { EmailTakenError } from "./../errors/HttpError";
 
 class AuthController {
 
@@ -14,11 +15,14 @@ class AuthController {
     public async signUp(req: Request, res: Response, next: NextFunction) {
         try {
             const authServiceInstance = Container.get(AuthService);
-            const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO);
+            const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO, res);
             return res.status(201).json({ user, token });
-        } catch (e) {
-            res.status(401).json({ "message": e.message, "success": false });
-            return next(e);
+        } catch (error) {
+            if (error instanceof EmailTakenError) {
+                res.status(error.status).json({ "message": error.message, "success": false });
+            } else {
+                throw error;
+            }
         }
     };
 

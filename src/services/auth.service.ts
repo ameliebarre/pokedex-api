@@ -1,9 +1,21 @@
-import { Service } from 'typedi';
+import { Service } from "typedi";
+import { Response } from "express";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
+import { EmailTakenError } from "./../errors/HttpError";
 
 import { IUser, IUserInputDTO } from './../interfaces/IUser';
 import User from '../models/User';
+
+class HttpError {
+    public code: number;
+    public message: string;
+
+    constructor(message, code) {
+        this.code = code;
+        this.message = message
+      }
+}
 
 @Service()
 export default class AuthService {
@@ -15,12 +27,20 @@ export default class AuthService {
      * @param {IUserInputDTO} userInputDTO 
      * @returns {Promise<{ user: IUser; token: string }>}
      */
-    public async SignUp(userInputDTO: IUserInputDTO): Promise<{ user: IUser; token: string }> {
+    public async SignUp(userInputDTO: IUserInputDTO, res: Response): Promise<{ user: IUser; token: string }> {
         try {
-            const hashedPassword = await bcrypt.hash(userInputDTO.password, 12);
-
+             // Check if email has the right pattern
             this.checkEmailFormat(userInputDTO.email);
 
+            // If user already exists in DB, send error
+            const existingUser = await User.findOne({ email: userInputDTO.email });
+
+            if (existingUser) {
+                throw new EmailTakenError('Email already registered');
+            }
+
+            const hashedPassword = await bcrypt.hash(userInputDTO.password, 12);
+            
             const userRecord = await User.create({
                 ...userInputDTO,
                 role: 'USER',
@@ -33,7 +53,6 @@ export default class AuthService {
             }
 
             const user = userRecord.toObject();
-            Reflect.deleteProperty(user, 'password');
 
             return { user, token };
 
