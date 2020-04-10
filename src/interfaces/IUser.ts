@@ -1,21 +1,23 @@
-import * as mongoose from 'mongoose';
 import IPokemon from "./IPokemon";
 import ITrainer from "./ITrainer";
 
-export default interface IUser extends mongoose.Document {
+export interface IUser {
+    _id: string;
+    username: string
     name: string,
     firstname: string,
     birthDate: String,
-    uid: number,
     email: string,
     sex: string,
     city: string,
     zipcode: string,
     country: string,
-    phone: number,
     password: string,
-    isFirstTime: boolean,
-    permissions: any[],
+    role: string,
     pokemons: IPokemon,
-    trainer: ITrainer
+}
+
+export interface IUserInputDTO {
+    email: string;
+    password: string;
 }

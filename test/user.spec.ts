@@ -67,7 +67,7 @@ describe('User test', () => {
            });
     });
 
-    it.only('should update the user password', () => {
+    it('should update the user password', () => {
         const newPassword = 'myNewPassword';
 
         return supertest(app)

@@ -4,7 +4,8 @@
     "module": "commonjs",
     "outDir": "dist",
     "removeComments": false,
-    "watch": true
+    "watch": true,
+    "experimentalDecorators": true
   },
   "include": [
     "src/**/*.ts"

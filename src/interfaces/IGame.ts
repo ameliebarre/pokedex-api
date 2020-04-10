@@ -1,7 +1,9 @@
-import * as mongoose from "mongoose";
+import { Document } from "mongoose";
+import IPokemon from "./IPokemon";
 
-export default interface IGame extends mongoose.Document {
+export default interface IGame extends Document {
     name: string,
     slug: string,
-    picture: string
+    released_date: Date,
+    pokemons: Array<IPokemon>
 }

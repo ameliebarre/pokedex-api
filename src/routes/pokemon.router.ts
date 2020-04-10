@@ -3,8 +3,8 @@ import PokemonController from '../controllers/pokemon.controller';
 
 class PokemonRouter {
 
-    router: Router;
-    pokemonController: PokemonController;
+    public router: Router;
+    public pokemonController: PokemonController;
 
     constructor() {
         this.router = Router();
@@ -12,12 +12,14 @@ class PokemonRouter {
         this.routes();
     }
 
-    routes() {
-        this.router.get('/', this.pokemonController.findAllPokemon);
-        this.router.get('/:slug', this.pokemonController.findPokemonBySlug);
+    public routes() {
+        this.router.get('/', this.pokemonController.getAllPokemon);
+        this.router.get('/:id', this.pokemonController.getPokemon);
         this.router.post('/', this.pokemonController.createPokemon);
         this.router.put('/:slug', this.pokemonController.updatePokemon);
         this.router.delete('/:slug', this.pokemonController.deletePokemon);
+        this.router.post('/generations', this.pokemonController.filterByGeneration);
+        this.router.post('/types', this.pokemonController.filterByTypes);
     }
 }
 

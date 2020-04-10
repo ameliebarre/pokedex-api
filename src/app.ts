@@ -7,25 +7,27 @@ import * as helmet from 'helmet';
 import * as cors from 'cors';
 import * as referrerPolicy from 'referrer-policy';
 
-import PokemonRouter from "./routes/pokemon-router";
-import AuthRouter from "./routes/auth-router";
-import TypeRouter from "./routes/type-router";
-import UserRouter from "./routes/user-router";
-import TrainerRouter from "./routes/trainer-router";
+import PokemonRouter from "./routes/pokemon.router";
+import AuthRouter from "./routes/auth.router";
+import TypeRouter from "./routes/type.router";
+import UserRouter from "./routes/user.router";
+import TrainerRouter from "./routes/trainer.router";
+import CapacityRouter from "./routes/capacity.router";
 import AuthMiddleware from './middlewares/auth-middleware';
 
-//Require dotenv
 require('dotenv').config();
 
 class App {
 
     public app: express.Application;
-    public mongoUrl: string = 'mongodb://localhost:27017/pokedex';
+    public router: express.Router;
+    public mongoUrl = 'mongodb://localhost:27017/pokedex';
 
     public auth = new AuthMiddleware();
 
     constructor() {
         this.app = express();
+        this.router = express.Router();
 
         // Enable CORS
         this.app.use(cors());
@@ -65,28 +67,27 @@ class App {
         require('./models/Pokemon');
         require('./models/Type');
         require('./models/User');
+        require('./models/Capacity');
+        require('./models/Game');
     }
 
     public routes(): void {
-        let router = express.Router();
-
-        router.get('/', (req, res, next) => {
+        this.app.use('/api', this.router);
+        this.router.get('/', (req, res) => {
             res.json({
                 message: 'Pokedex API is working !'
             });
         });
 
-        // routes.initialize(app);
-
-        this.app.use('/', router);
-        this.app.use('/auth', AuthRouter);
-        this.app.use('/api/users', UserRouter);
-        this.app.use('/api/pokemons', PokemonRouter);
-        this.app.use('/api/types', TypeRouter);
-        this.app.use('/api/trainers', TrainerRouter);
+        this.router.use('/auth', AuthRouter);
+        this.router.use('/users', UserRouter);
+        this.router.use('/pokemons', PokemonRouter);
+        this.router.use('/types', TypeRouter);
+        this.router.use('/trainers', TrainerRouter);
+        this.router.use('/capacities', CapacityRouter);
     }
 
-    private mongoSetup(): void {
+    public mongoSetup(): void {
         (<any>mongoose).Promise = global.Promise;
         mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
 
