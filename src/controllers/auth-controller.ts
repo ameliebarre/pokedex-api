@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Container } from 'typedi';
 import AuthService from './../services/auth.service';
 import { IUserInputDTO } from './../interfaces/IUser';
-import { EmailTakenError } from "./../errors/HttpError";
+import { HttpError } from "./../errors/HttpError";
 
 class AuthController {
 
@@ -18,8 +18,8 @@ class AuthController {
             const { user, token } = await authServiceInstance.SignUp(req.body as IUserInputDTO, res);
             return res.status(201).json({ user, token });
         } catch (error) {
-            if (error instanceof EmailTakenError) {
-                res.status(error.status).json({ "message": error.message, "success": false });
+            if (error instanceof HttpError) {
+                res.status(error.status).json({ message: error.message, status: error.status });
             } else {
                 throw error;
             }
@@ -38,9 +38,10 @@ class AuthController {
             const { email, password } = req.body;
             const { user, token } = await authServiceInstance.SignIn(email, password);
             return res.status(200).json({ user, token });
-        } catch (e) {
-            res.status(401).json({ "message": e.message, "success": false });
-            return next(e);
+        } catch (error) {
+            if (error instanceof HttpError) {
+                res.status(error.status).json({ message: error.message, status: error.status });
+            }
         }
     }
 }

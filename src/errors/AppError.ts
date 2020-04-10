@@ -1,7 +1,7 @@
 export class AppError extends Error {
   public status: number;
 
-  constructor (message, status) {
+  constructor (message: string, status: number) {
     // Calling parent constructor of base Error class.
     super(message);
     

@@ -87,7 +87,7 @@ class App {
         this.router.use('/capacities', CapacityRouter);
     }
 
-    private mongoSetup(): void {
+    public mongoSetup(): void {
         (<any>mongoose).Promise = global.Promise;
         mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
 

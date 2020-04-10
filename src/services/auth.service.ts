@@ -2,20 +2,10 @@ import { Service } from "typedi";
 import { Response } from "express";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import { EmailTakenError } from "./../errors/HttpError";
+import { HttpError } from "./../errors/HttpError";
 
 import { IUser, IUserInputDTO } from './../interfaces/IUser';
 import User from '../models/User';
-
-class HttpError {
-    public code: number;
-    public message: string;
-
-    constructor(message, code) {
-        this.code = code;
-        this.message = message
-      }
-}
 
 @Service()
 export default class AuthService {
@@ -36,7 +26,7 @@ export default class AuthService {
             const existingUser = await User.findOne({ email: userInputDTO.email });
 
             if (existingUser) {
-                throw new EmailTakenError('Email already registered');
+                throw new HttpError('Email already taken', 409);
             }
 
             const hashedPassword = await bcrypt.hash(userInputDTO.password, 12);
@@ -49,7 +39,7 @@ export default class AuthService {
             const token = this.generateToken(userRecord);
 
             if (!userRecord) {
-                throw new Error('User cannot be created');
+                throw new HttpError('User cannot be created', 500);
             }
 
             const user = userRecord.toObject();
@@ -71,7 +61,7 @@ export default class AuthService {
             const userRecord = await User.findOne({ email });
 
             if (!userRecord) {
-                throw new Error('User not registered');
+                throw new HttpError('User not registered', 401);
             }
     
             let validPassword = await bcrypt.compare(password, userRecord.password);
@@ -82,7 +72,7 @@ export default class AuthService {
                 Reflect.deleteProperty(user, 'password');
                 return { user, token };
             } else {
-                throw new Error('Invalid Password');
+                throw new HttpError('Invalid password', 401);
             }
         } catch(e) {
             throw e;
@@ -94,7 +84,7 @@ export default class AuthService {
      * @param {IUSer} user
      * @returns {void}
      */
-    private generateToken(user: IUser) {
+    private generateToken(user: IUser): string {
         const today = new Date();
         const expired = new Date(today);
         expired.setDate(today.getDate() + 60);
@@ -114,7 +104,7 @@ export default class AuthService {
      * @param {string} email
      * @returns {void}
      */
-    private checkEmailFormat(email: string) {
+    private checkEmailFormat(email: string): void {
         const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if (!emailRegexp.test(email)) {
             throw new Error("EMAIL_NOT_VALID");
